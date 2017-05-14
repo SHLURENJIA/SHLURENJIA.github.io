@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android 自定义控件," />
 
 
 
@@ -90,17 +90,18 @@
 
 
 
-<meta name="description" content="下拉刷新（Scroller 的使用） title: 下拉刷新的实现原理（Scroller 的使用） categories:  Android 自定义控件  tags:  Android 自定义控件   前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图123456789101112131">
+<meta name="description" content="前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364">
+<meta name="keywords" content="Android 自定义控件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ShwanYang">
-<meta property="og:url" content="http://yoursite.com/2017/05/12/下拉刷新（Scroller 的使用）/index.html">
+<meta property="og:title" content="下拉刷新的实现原理（Scroller 的使用）">
+<meta property="og:url" content="http://yoursite.com/2017/05/12/Android 自定义控件/下拉刷新（Scroller 的使用）/index.html">
 <meta property="og:site_name" content="ShwanYang">
-<meta property="og:description" content="下拉刷新（Scroller 的使用） title: 下拉刷新的实现原理（Scroller 的使用） categories:  Android 自定义控件  tags:  Android 自定义控件   前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图123456789101112131">
+<meta property="og:description" content="前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2214054-becefa825b66efbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-12T02:34:35.086Z">
+<meta property="og:updated_time" content="2017-05-14T12:57:03.301Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ShwanYang">
-<meta name="twitter:description" content="下拉刷新（Scroller 的使用） title: 下拉刷新的实现原理（Scroller 的使用） categories:  Android 自定义控件  tags:  Android 自定义控件   前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图123456789101112131">
+<meta name="twitter:title" content="下拉刷新的实现原理（Scroller 的使用）">
+<meta name="twitter:description" content="前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2214054-becefa825b66efbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -109,8 +110,8 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -129,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/12/下拉刷新（Scroller 的使用）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/12/Android 自定义控件/下拉刷新（Scroller 的使用）/"/>
 
 
 
 
 
-  <title> | ShwanYang</title>
+  <title>下拉刷新的实现原理（Scroller 的使用） | ShwanYang</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/12/下拉刷新（Scroller 的使用）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/12/Android 自定义控件/下拉刷新（Scroller 的使用）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ShwanYang">
@@ -272,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">下拉刷新的实现原理（Scroller 的使用）</h1>
         
 
         <div class="post-meta">
@@ -295,12 +296,45 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-自定义控件/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 自定义控件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
           
+          
+             <span id="/2017/05/12/Android 自定义控件/下拉刷新（Scroller 的使用）/" class="leancloud_visitors" data-flag-title="下拉刷新的实现原理（Scroller 的使用）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -319,18 +353,7 @@
       
 
       
-        <h1 id="下拉刷新（Scroller-的使用）"><a href="#下拉刷新（Scroller-的使用）" class="headerlink" title="下拉刷新（Scroller 的使用）"></a>下拉刷新（Scroller 的使用）</h1><hr>
-<p>title: 下拉刷新的实现原理（Scroller 的使用）</p>
-<p>categories:</p>
-<ul>
-<li>Android 自定义控件</li>
-</ul>
-<p>tags:</p>
-<ul>
-<li>Android 自定义控件</li>
-</ul>
-<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p><strong>涉及知识点：</strong></p>
 <ul>
 <li>Scroller 使用</li>
@@ -391,6 +414,12 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-自定义控件/" rel="tag"># Android 自定义控件</a>
+          
+        </div>
       
 
       
@@ -481,7 +510,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -492,7 +521,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -503,7 +532,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -538,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下拉刷新（Scroller-的使用）"><span class="nav-number">1.</span> <span class="nav-text">下拉刷新（Scroller 的使用）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化视图"><span class="nav-number">1.2.</span> <span class="nav-text">初始化视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测量宽高"><span class="nav-number">1.3.</span> <span class="nav-text">测量宽高</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MeasureSpec-的含义，组成"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">MeasureSpec 的含义，组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getMeasureHeight-和-getHeight-区别"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">getMeasureHeight() 和 getHeight() 区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下拉刷新"><span class="nav-number">1.4.</span> <span class="nav-text">下拉刷新</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化视图"><span class="nav-number">2.</span> <span class="nav-text">初始化视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测量宽高"><span class="nav-number">3.</span> <span class="nav-text">测量宽高</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MeasureSpec-的含义，组成"><span class="nav-number">3.0.1.</span> <span class="nav-text">MeasureSpec 的含义，组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getMeasureHeight-和-getHeight-区别"><span class="nav-number">3.0.2.</span> <span class="nav-text">getMeasureHeight() 和 getHeight() 区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下拉刷新"><span class="nav-number">4.</span> <span class="nav-text">下拉刷新</span></a></li></ol></div>
             
 
           </div>
@@ -576,7 +605,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Mist
   </a>
 </div>
 
@@ -709,6 +738,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
