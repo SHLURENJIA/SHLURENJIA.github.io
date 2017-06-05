@@ -1,0 +1,904 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android 基础知识,Activity,四大组件,面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Activity 基础Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 Manifest 文件中给活动进行注册。 123456789&amp;lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;singleTask&quot;&amp;gt;            &amp;lt;intent-filter&amp;gt;">
+<meta name="keywords" content="Android 基础知识,Activity,四大组件,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="四大组件——Activity 相关">
+<meta property="og:url" content="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Activity 相关/index.html">
+<meta property="og:site_name" content="ShwanYang">
+<meta property="og:description" content="Activity 基础Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 Manifest 文件中给活动进行注册。 123456789&amp;lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;singleTask&quot;&amp;gt;            &amp;lt;intent-filter&amp;gt;">
+<meta property="og:image" content="http://i4.buimg.com/1949/75a197c753928d46.png">
+<meta property="og:updated_time" content="2017-06-05T07:20:17.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="四大组件——Activity 相关">
+<meta name="twitter:description" content="Activity 基础Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 Manifest 文件中给活动进行注册。 123456789&amp;lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;singleTask&quot;&amp;gt;            &amp;lt;intent-filter&amp;gt;">
+<meta name="twitter:image" content="http://i4.buimg.com/1949/75a197c753928d46.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Activity 相关/"/>
+
+
+
+
+
+  <title>四大组件——Activity 相关 | ShwanYang</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShwanYang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Activity 相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShwanYang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShwanYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">四大组件——Activity 相关</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-04T09:30:15+08:00">
+                2017-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-面试集锦/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 面试集锦</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/04/Android 面试集锦/四大组件——Activity 相关/" class="leancloud_visitors" data-flag-title="四大组件——Activity 相关">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Activity-基础"><a href="#Activity-基础" class="headerlink" title="Activity 基础"></a>Activity 基础</h2><p>Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 <strong>Manifest 文件</strong>中给活动进行注册。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span> <span class="attr">android:launchMode</span>=<span class="string">"singleTask"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></div><div class="line"></div><div class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".SecondActivity"</span>&gt;</span><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">acyivity</span> <span class="attr">android:name</span>=<span class="string">".xxx"</span>&gt;</span><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>每个 Activity 都会存放到一个栈中（back stack），所有的 Activity 归属于栈管理。一般来说我们只有一个返回栈装载 Activity，每次启动新活动的时候都在栈顶新建一个Activity的实例并压入栈底。这也就是Activity启动的标准模式 <strong>(Standard)</strong>.</p>
+<h2 id="Activity-的启动模式"><a href="#Activity-的启动模式" class="headerlink" title="Activity 的启动模式"></a>Activity 的启动模式</h2><p>可以在上面 Manifest 文件声明 Activity 那里看见，声明 Activity 的启动模式是 <strong>android:launchMode</strong>,</p>
+<blockquote>
+<p>android:launchMode = “standard | singleTop | singletTask | singleInstance”</p>
+</blockquote>
+<ul>
+<li><p><strong>Standard</strong> </p>
+<p>标准模式，也是默认的启动模式。假如有两个 Activity A，B。在标准模式情况下，先新建了 Activity A，A 入栈，点击跳转到 Activity B，新建 B 实例，压栈，然后 B 跳转到 A，A创建实例压栈。这样返回栈从底向上为 A1、B、A2.</p>
+<p>不管这个 Activity 是否已经存在，Activity 的三回调都会执行（onCreate-&gt;onStart-&gt;onResume）</p>
+</li>
+<li><p><strong>SingleTop</strong></p>
+<p>栈顶模式，<strong>栈顶复用 </strong>。字面理解，就是在标准模式的情况下，如果新建的 Activity A 已经是栈顶，那么 A 将不会被创建，三回调不执行，同时 Activity 的 <strong>onNewIntent( )</strong>会被回调。</p>
+<p>如果新的 Activity 不是栈顶，那么作用和 Standard 模式一样。</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>SingleTask</strong></p>
+<p>单栈模式，<strong>栈内复用 </strong>。创建 Activity 的时候，系统会判定栈内是否存在该 Activity 的实例，如果没有，创建实例压栈。</p>
+<p>如果有，且在栈顶，不创建实例，直接复用。</p>
+<p>如果有但是不在栈顶，会将该 Activity 上面的栈全部弹栈出去，让这个 Activity 调到了栈顶。</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>SingleInstance</strong></p>
+<p>单例模式。这里说的单例是全局单例。无论哪个 Task 中启动目标 Activity ，都只会创建一个 Activity 实例并却会用一个全新的栈来装载他。</p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="Activity-的生命周期"><a href="#Activity-的生命周期" class="headerlink" title="Activity 的生命周期"></a>Activity 的生命周期</h2><p>Activity 最重要就是掌握生命周期。解释之前，先贴图：</p>
+<p><img src="http://i4.buimg.com/1949/75a197c753928d46.png" alt="Activity 生命周期"></p>
+<p>这是经典的官方 Activity 生命周期图表。对于生命周期，我们一般分为一下几个周期：</p>
+<ol>
+<li>activity的完整生存期会在 onCreate() 调用和 onDestroy() 调用之间发生。　</li>
+<li>activity的可见生存期会在 onStart() 调用和 onStop() 调用之间发生。系统会在activity的整个生存期内多次调用 onStart() 和onStop()， 因为activity可能会在显示和隐藏之间不断地来回切换。　</li>
+<li>activity的前后台切换会在 onResume() 调用和 onPause() 之间发生。因为这个状态可能会经常发生转换，为了避免切换迟缓引起的用户等待，这两个方法中的代码应该相当地轻量化。</li>
+</ol>
+<p><strong>另外还有几个常见的我们会接触到的应用场景的周期： </strong></p>
+<ul>
+<li><p>启动 Activity:onCreate()—&gt;onStart()—&gt;onResume()，Activity 进入运行状态。</p>
+</li>
+<li><p>Activity 退居后台:当前Activity转到新的Activity界面或<strong>按 Home 键 </strong>回到主屏：onPause()—&gt;onStop()，进入停滞状态。</p>
+</li>
+<li><p>Activity 返回前台:onRestart()—&gt;<strong>onStart()</strong>—&gt;onResume()，再次回到运行状态。</p>
+</li>
+<li><p>Activity退居后台，且系统内存不足，系统会杀死这个后台状态的Activity（此时这个Activity引用仍然处在任务栈中，只是这个时候引用指向的对象已经为null），若再次回到这个Activity,则会走onCreate()–&gt;onStart()—&gt;onResume()(将重新走一次Activity的初始化生命周期)</p>
+</li>
+<li><p>锁屏：<code>onPause()-&gt;onStop()</code></p>
+</li>
+<li><p>解锁：<code>onStart()-&gt;onResume()</code></p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="几个问题"><a href="#几个问题" class="headerlink" title="几个问题"></a>几个问题</h2><h3 id="1-Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化"><a href="#1-Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化" class="headerlink" title="1. Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化"></a>1. <a href="https://shlurenjia.github.io/2017/05/31/Android%20%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/%E6%8C%89%E4%B8%8B%E8%BF%94%E5%9B%9E%E9%94%AE-Activity-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%8F%98%E5%8C%96/" target="_blank" rel="external">Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化</a></h3><h3 id="2-Activity-的缓存方法"><a href="#2-Activity-的缓存方法" class="headerlink" title="2.Activity 的缓存方法"></a>2.Activity 的缓存方法</h3><blockquote>
+<p>有两个 Activity a,b ，当从 A 进入 B 一段时间时候，可能会把 A 回收，这时候按下返回键，执行的就不是 Acticity 的 <strong>onRestart( )</strong>方法，而是 <strong>onCreate( )</strong>，A 被重新创建了一次，这时，A 中保存的临时数据和状态可能就丢失了。</p>
+<p>这就是我们为什么要对 Activity 进行缓存。</p>
+</blockquote>
+<h4 id="onSaveInstanceState-Bundle-bundle"><a href="#onSaveInstanceState-Bundle-bundle" class="headerlink" title="onSaveInstanceState( Bundle  bundle)"></a>onSaveInstanceState( Bundle  bundle)</h4><p>这个方法会在 Activity 变得“容易”被销毁前调用，方法中一个 Bundle 参数可以存储键值对。以便回收后重建时数据恢复（ onCreate 或者 onRestoreInstanceState 里面恢复）。 先看一下一般的使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"> <span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">  <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">  setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">  <span class="comment">//这里，当Acivity第一次被创建的时候为空</span></div><div class="line">  <span class="comment">//所以我们需要判断一下</span></div><div class="line">  <span class="keyword">if</span>( savedInstanceState != <span class="keyword">null</span> )&#123;</div><div class="line">    savedInstanceState.getString(<span class="string">"key"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span></span>&#123;</div><div class="line">  <span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line">  outState.putString(<span class="string">"key"</span>,<span class="string">"Android"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">   <span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	   <span class="keyword">if</span>(savedInstanceState!=<span class="keyword">null</span>)&#123; <span class="comment">//判断是否有以前的保存状态信息</span></div><div class="line">			 savedInstanceState.get(<span class="string">"Key"</span>); </div><div class="line">		&#125;</div><div class="line">	<span class="keyword">super</span>.onRestoreInstanceState(savedInstanceState);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面我们有提到“容易”这个词，意思是当 Activity 还没有被销毁，但是有可能被销毁，存在可能性。换而言之，就是未经你允许时销毁了你的活动，那么系统救调用 <strong>onSaveInstanceState</strong>。 那么可能性有哪些？</p>
+<ol>
+<li>按下 HOME 键。</li>
+<li>长按 HOME 键。（切换应用）</li>
+<li>按下电源键。（熄屏）</li>
+<li>从 Acitivty A 中启动一个新的 Activity。</li>
+<li>切换屏幕方向。（不指定 configchange 属性）</li>
+</ol>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>不要在 onSaveInstanceState 里面去存储持久化数据。因为它本身带有不确定性，这个方法应该记录 Activity 的瞬间状态（UI状态）。当用户离开这个 Activity 应该在 <strong>onPause</strong> 里面存储持久化数据，例如存入数据库。</li>
+<li>onSaveInstanceState 如果被调用一定会在 <strong>onStop 前</strong>被调用，但是<strong>不能保证它在 onPause 前还是后调用</strong>。 </li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-基础知识/" rel="tag"># Android 基础知识</a>
+          
+            <a href="/tags/Activity/" rel="tag"># Activity</a>
+          
+            <a href="/tags/四大组件/" rel="tag"># 四大组件</a>
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/31/Android 问题记录/按下返回键-Activity-的生命周期变化/" rel="next" title="按下返回键 Activity 的生命周期变化">
+                <i class="fa fa-chevron-left"></i> 按下返回键 Activity 的生命周期变化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headlogo/head.jpg"
+               alt="ShwanYang" />
+          <p class="site-author-name" itemprop="name">ShwanYang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-基础"><span class="nav-number">1.</span> <span class="nav-text">Activity 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的启动模式"><span class="nav-number">2.</span> <span class="nav-text">Activity 的启动模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的生命周期"><span class="nav-number">3.</span> <span class="nav-text">Activity 的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个问题"><span class="nav-number">4.</span> <span class="nav-text">几个问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化"><span class="nav-number">4.1.</span> <span class="nav-text">1. Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Activity-的缓存方法"><span class="nav-number">4.2.</span> <span class="nav-text">2.Activity 的缓存方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#onSaveInstanceState-Bundle-bundle"><span class="nav-number">4.2.1.</span> <span class="nav-text">onSaveInstanceState( Bundle  bundle)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShwanYang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
