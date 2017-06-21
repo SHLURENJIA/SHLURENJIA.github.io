@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,Activity," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -90,19 +90,18 @@
 
 
 
-<meta name="description" content="前言： 因为之前被大佬问道这个问题，回来记录一下： 两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？   明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 onRestart（）方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：  明显可见，Activity A 创建完毕（">
-<meta name="keywords" content="Android,Activity">
+<meta name="description" content="Service 相关 Service 的生命周期 Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service, ServiceConnection conn, int flags) 方法来进行 Service 与 Context  的关联并启动， Service 的生命周期依附于 Context （不求同生">
 <meta property="og:type" content="article">
-<meta property="og:title" content="按下返回键 Activity 的生命周期变化">
-<meta property="og:url" content="http://yoursite.com/2017/05/31/Android 问题记录/按下返回键-Activity-的生命周期变化/index.html">
+<meta property="og:title" content="ShwanYang">
+<meta property="og:url" content="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Service 相关/index.html">
 <meta property="og:site_name" content="ShwanYang">
-<meta property="og:description" content="前言： 因为之前被大佬问道这个问题，回来记录一下： 两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？   明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 onRestart（）方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：  明显可见，Activity A 创建完毕（">
-<meta property="og:image" content="http://i1.piimg.com/1949/2d5cfb117b2e873a.png">
-<meta property="og:updated_time" content="2017-05-31T13:10:02.907Z">
+<meta property="og:description" content="Service 相关 Service 的生命周期 Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service, ServiceConnection conn, int flags) 方法来进行 Service 与 Context  的关联并启动， Service 的生命周期依附于 Context （不求同生">
+<meta property="og:image" content="http://i4.buimg.com/1949/3da8de2cf2c3b447.png">
+<meta property="og:updated_time" content="2017-06-04T14:59:51.174Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="按下返回键 Activity 的生命周期变化">
-<meta name="twitter:description" content="前言： 因为之前被大佬问道这个问题，回来记录一下： 两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？   明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 onRestart（）方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：  明显可见，Activity A 创建完毕（">
-<meta name="twitter:image" content="http://i1.piimg.com/1949/2d5cfb117b2e873a.png">
+<meta name="twitter:title" content="ShwanYang">
+<meta name="twitter:description" content="Service 相关 Service 的生命周期 Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service, ServiceConnection conn, int flags) 方法来进行 Service 与 Context  的关联并启动， Service 的生命周期依附于 Context （不求同生">
+<meta name="twitter:image" content="http://i4.buimg.com/1949/3da8de2cf2c3b447.png">
 
 
 
@@ -130,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/31/Android 问题记录/按下返回键-Activity-的生命周期变化/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Service 相关/"/>
 
 
 
 
 
-  <title>按下返回键 Activity 的生命周期变化 | ShwanYang</title>
+  <title> | ShwanYang</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/31/Android 问题记录/按下返回键-Activity-的生命周期变化/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Service 相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ShwanYang">
@@ -273,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">按下返回键 Activity 的生命周期变化</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -285,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T20:36:53+08:00">
-                2017-05-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-04T15:50:16+08:00">
+                2017-06-04
               </time>
             
 
@@ -296,28 +295,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-问题记录/" itemprop="url" rel="index">
-                    <span itemprop="name">Android 问题记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -325,7 +302,7 @@
 
           
           
-             <span id="/2017/05/31/Android 问题记录/按下返回键-Activity-的生命周期变化/" class="leancloud_visitors" data-flag-title="按下返回键 Activity 的生命周期变化">
+             <span id="/2017/06/04/Android 面试集锦/四大组件——Service 相关/" class="leancloud_visitors" data-flag-title="">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -353,22 +330,72 @@
       
 
       
-        <blockquote>
-<p><strong>前言：</strong></p>
-<p>因为之前被大佬问道这个问题，回来记录一下：</p>
-<p>两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？</p>
-</blockquote>
+        <h1 id="Service-相关"><a href="#Service-相关" class="headerlink" title="Service 相关"></a>Service 相关</h1><hr>
+<h2 id="Service-的生命周期"><a href="#Service-的生命周期" class="headerlink" title="Service 的生命周期"></a>Service 的生命周期</h2><p><img src="http://i4.buimg.com/1949/3da8de2cf2c3b447.png" alt="Service 的生命周期"></p>
+<h2 id="Service-的两种启动方法有何区别"><a href="#Service-的两种启动方法有何区别" class="headerlink" title="Service 的两种启动方法有何区别"></a>Service 的两种启动方法有何区别</h2><ol>
+<li>在 Context 中通过 <code>public boolean bindService(Intent service, ServiceConnection conn, int flags)</code> 方法来进行 Service 与 Context  的关联并启动， <strong>Service 的生命周期依附于 Context （不求同生，但是同死）</strong>。</li>
+<li>通过 <code>public ComponentName startService(Intent service)</code> 方法启动一个 Service，生命周期与 Context 无关。</li>
+</ol>
 <hr>
-<p>明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 <strong>onRestart（）</strong>方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：</p>
-<p><img src="http://i1.piimg.com/1949/2d5cfb117b2e873a.png" alt=""></p>
-<p>明显可见，Activity A 创建完毕（ <strong>onResume</strong> ）后，点击跳转，Activity A 就进入 <strong>onPause</strong> 状态，这时候就是  Activity B开始创建了，当 Activity B 创建完毕可见（ <strong>onResume</strong> ）后，Activity A 进入 <strong>onStop</strong> 状态。此时 A 不可见，B 可见。</p>
-<p>点击返回键之后，B 进入 <strong>onPause</strong> 状态，而 A 调用 <strong>onStart</strong> 方法，走正常的周期流程。而 B 就进入销毁的程序。</p>
-<p>过程如下：</p>
+<h2 id="如何保证-Sercive-不被杀死"><a href="#如何保证-Sercive-不被杀死" class="headerlink" title="如何保证 Sercive 不被杀死"></a>如何保证 Sercive 不被杀死</h2><p>首先完全不被杀死是不可能的，除非是系统级别的。能做的是杀死后采取措施让 Service 重新启动。</p>
+<h3 id="1-Service-设置成-START-STICKY"><a href="#1-Service-设置成-START-STICKY" class="headerlink" title="1. Service 设置成  START_STICKY"></a>1. Service 设置成  START_STICKY</h3><ul>
+<li><p>kill 之后会被重启（等待时间 5秒 ），重传 Intent，保持与重启之前一样。</p>
 <blockquote>
-<p>onCreate(A) -&gt; onStart(A) -&gt; onResume(A) </p>
-<p>-&gt; 点击跳转到 B -&gt; onPause(A) -&gt; onCreate(B) -&gt; onStart(B) -&gt; onResume(B) -&gt; onStop(A)</p>
-<p>-&gt; 按下返回键 -&gt; onPause(B) -&gt; onRestart(A) -&gt; onStart(A) -&gt; onResume(A) -&gt; onStop(B) -&gt; onDestroy(B)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="meta">@Override</span></div><div class="line">&gt;         <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</div><div class="line">&gt;                 flags =  START_STICKY;</div><div class="line">&gt;                 <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);</div><div class="line">&gt; <span class="comment">//                return  START_REDELIVER_INTENT;</span></div><div class="line">&gt;         &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
 </blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>​</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-提升-Service-优先级"><a href="#2-提升-Service-优先级" class="headerlink" title="2. 提升 Service 优先级"></a>2. 提升 Service 优先级</h3><ul>
+<li><p>在 Manifest 文件中对 <strong>intent-filter</strong> 设置属性 <code>android:priority = &quot;1000&quot;</code> ，其中，1000 是最高的优先级，数值越小优先级越低。（同样适用于广播）</p>
+<blockquote>
+<p>【结论】目前看来，priority这个属性貌似只适用于broadcast，对于Service来说可能无效。 </p>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-提升-Service-进程优先级"><a href="#3-提升-Service-进程优先级" class="headerlink" title="3. 提升 Service 进程优先级"></a>3. 提升 Service 进程优先级</h3><ul>
+<li><p>Android 中进程是托管的，当系统进程空间紧张的时候，会依照优先级自动对进程回收。先销毁优先级低的。</p>
+<blockquote>
+<p>前台进程 &gt; 可见进程 &gt; 服务进程 &gt; 后台进程 &gt; 内容供应节点(CONTENT_PROVIDER) &gt; 空进程</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p><strong>使用 startForeground 将 Service 放到前台状态</strong></p>
+<blockquote>
+<p>在极度低内存的情况下还是会 kill 掉，并且一定不会 restart 。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="4-onDestory-方法里面重启-Service"><a href="#4-onDestory-方法里面重启-Service" class="headerlink" title="4. onDestory 方法里面重启 Service"></a>4. onDestory 方法里面重启 Service</h3><ul>
+<li><p>service + broadcast 方式，就是当 Service 走 onDestory 的时候，发送一条自定义广播，当收到广播时，重启 Service。</p>
+</li>
+<li><p>也可以直接在 onDestory 里面 <strong>startService</strong> 。</p>
+<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;   </div><div class="line">&gt;   Intent localIntent = <span class="keyword">new</span> Intent();</div><div class="line">&gt;   localIntent.setClass(<span class="keyword">this</span>, MyService.class);  <span class="comment">//销毁时重新启动Service</span></div><div class="line">&gt;   <span class="keyword">this</span>.startService(localIntent);</div><div class="line">&gt; &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>​</p>
+</blockquote>
+</li>
+<li><p>在 setting 里面强制停止的话，app 进程就可能直接被干掉了，onDestory 都进不来。</p>
+</li>
+</ul>
+<h3 id="5-据说-手机QQ-放了一个像素在前台，顽强过小强。"><a href="#5-据说-手机QQ-放了一个像素在前台，顽强过小强。" class="headerlink" title="5. 据说 手机QQ 放了一个像素在前台，顽强过小强。"></a>5. 据说 手机QQ 放了一个像素在前台，顽强过小强。</h3><hr>
+<h2 id="IntentService-的使用场景与特点"><a href="#IntentService-的使用场景与特点" class="headerlink" title="IntentService 的使用场景与特点"></a>IntentService 的使用场景与特点</h2><blockquote>
+<p>IntentService 是 Service 的子类，是一个异步的，会自动停止的服务。很好滴解决了传统 Service 中处理完耗时操作之后忘记销毁 Service 的问题。</p>
+</blockquote>
+<p>优点：</p>
+<ul>
+<li>不需要自己去 new Thread</li>
+<li>不需要考虑什么时候关闭该 Service</li>
+</ul>
+<p>使用场景：<strong>（！！！这里没懂，待验证！！！）</strong> </p>
+<p>onStartCommand中回调了onStart，onStart中通过mServiceHandler发送消息到该handler的handleMessage中去。最后handleMessage中回调onHandleIntent(intent)。</p>
 
       
     </div>
@@ -396,14 +423,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
-            <a href="/tags/Activity/" rel="tag"># Activity</a>
-          
-        </div>
-      
 
       
         
@@ -413,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/12/Android 基础学习/Android 中的消息机制/" rel="next" title="Android 中的消息机制">
-                <i class="fa fa-chevron-left"></i> Android 中的消息机制
+              <a href="/2017/06/04/Android 面试集锦/四大组件——Activity 相关/" rel="next" title="四大组件——Activity 相关">
+                <i class="fa fa-chevron-left"></i> 四大组件——Activity 相关
               </a>
             
           </div>
@@ -423,8 +442,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/04/Android 面试集锦/四大组件——Activity 相关/" rel="prev" title="四大组件——Activity 相关">
-                四大组件——Activity 相关 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/04/Android 面试集锦/四大组件——Broadcast Receiver 相关/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -472,8 +491,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/headlogo/head.jpg"
@@ -535,6 +563,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Service-相关"><span class="nav-number">1.</span> <span class="nav-text">Service 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-的生命周期"><span class="nav-number">1.1.</span> <span class="nav-text">Service 的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-的两种启动方法有何区别"><span class="nav-number">1.2.</span> <span class="nav-text">Service 的两种启动方法有何区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证-Sercive-不被杀死"><span class="nav-number">1.3.</span> <span class="nav-text">如何保证 Sercive 不被杀死</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Service-设置成-START-STICKY"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. Service 设置成  START_STICKY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-提升-Service-优先级"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 提升 Service 优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-提升-Service-进程优先级"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 提升 Service 进程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-onDestory-方法里面重启-Service"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. onDestory 方法里面重启 Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-据说-手机QQ-放了一个像素在前台，顽强过小强。"><span class="nav-number">1.3.5.</span> <span class="nav-text">5. 据说 手机QQ 放了一个像素在前台，顽强过小强。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentService-的使用场景与特点"><span class="nav-number">1.4.</span> <span class="nav-text">IntentService 的使用场景与特点</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
