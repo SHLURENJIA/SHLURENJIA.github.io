@@ -1,0 +1,901 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="动画," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Android 里面的动画可以分为两类，传统动画  和 3.0 以后出现的属性动画。 传统动画又分为两种：帧动画（Frame Animation）和补间动画（Tweened Animation） 传统动画帧动画（Frame Animation）帧动画就是像 GIF 的动图，一定时间内多张图片切换达到动画的视觉效果。 123456789101112&amp;lt;?xml version=&quot;1.0&quot; enc">
+<meta name="keywords" content="动画">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 动画总结">
+<meta property="og:url" content="http://yoursite.com/2017/06/05/Android 基础学习/Android 动画总结/index.html">
+<meta property="og:site_name" content="ShwanYang">
+<meta property="og:description" content="Android 里面的动画可以分为两类，传统动画  和 3.0 以后出现的属性动画。 传统动画又分为两种：帧动画（Frame Animation）和补间动画（Tweened Animation） 传统动画帧动画（Frame Animation）帧动画就是像 GIF 的动图，一定时间内多张图片切换达到动画的视觉效果。 123456789101112&amp;lt;?xml version=&quot;1.0&quot; enc">
+<meta property="og:image" content="http://img.blog.csdn.net/20141013194511797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGFydmljODgwOTI1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1115031-80301bbb0ae884b2.png?imageMogr2/auto-orient/strip%7CimageView2/2">
+<meta property="og:updated_time" content="2017-06-24T02:39:37.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 动画总结">
+<meta name="twitter:description" content="Android 里面的动画可以分为两类，传统动画  和 3.0 以后出现的属性动画。 传统动画又分为两种：帧动画（Frame Animation）和补间动画（Tweened Animation） 传统动画帧动画（Frame Animation）帧动画就是像 GIF 的动图，一定时间内多张图片切换达到动画的视觉效果。 123456789101112&amp;lt;?xml version=&quot;1.0&quot; enc">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20141013194511797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGFydmljODgwOTI1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/05/Android 基础学习/Android 动画总结/"/>
+
+
+
+
+
+  <title>Android 动画总结 | ShwanYang</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShwanYang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/05/Android 基础学习/Android 动画总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ShwanYang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShwanYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 动画总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-05T22:39:04+08:00">
+                2017-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-基础学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 基础学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/05/Android 基础学习/Android 动画总结/" class="leancloud_visitors" data-flag-title="Android 动画总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Android 里面的动画可以分为两类，<strong>传统动画 </strong> 和 <strong>3.0 以后出现的属性动画</strong>。</p>
+<p>传统动画又分为两种：帧动画（Frame Animation）和补间动画（Tweened Animation）</p>
+<h2 id="传统动画"><a href="#传统动画" class="headerlink" title="传统动画"></a>传统动画</h2><h3 id="帧动画（Frame-Animation）"><a href="#帧动画（Frame-Animation）" class="headerlink" title="帧动画（Frame Animation）"></a>帧动画（Frame Animation）</h3><p>帧动画就是像 GIF 的动图，一定时间内多张图片切换达到动画的视觉效果。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">animation-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line">        <span class="attr">android:drawable</span>=<span class="string">"@drawable/a_0"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"100"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line">        <span class="attr">android:drawable</span>=<span class="string">"@drawable/a_1"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"100"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line">        <span class="attr">android:drawable</span>=<span class="string">"@drawable/a_2"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"100"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">animation-list</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_frame_animation);</div><div class="line">        ImageView animationImg1 = (ImageView) findViewById(R.id.animation1);</div><div class="line">        animationImg1.setImageResource(R.drawable.frame_anim1);</div><div class="line">        AnimationDrawable animationDrawable1 = (AnimationDrawable) animationImg1.getDrawable();</div><div class="line">        animationDrawable1.start();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>图片资源决定了这个动画，一定程度上也会因此占了资源的使用。</p>
+<p>另外，有个常用的属性： <strong>android : oneshot=”false”</strong> ，就是只循环一次。</p>
+<h3 id="补间动画（Tweened-Animation-）"><a href="#补间动画（Tweened-Animation-）" class="headerlink" title="补间动画（Tweened Animation ）"></a>补间动画（Tweened Animation ）</h3><p>补间动画有四种属性：</p>
+<ul>
+<li>alpha：淡入淡出，透明度</li>
+<li>translate：位移</li>
+<li>scale：缩放大小</li>
+<li>rotate： 旋转</li>
+</ul>
+<p>补间动画一般使用 xml 来实现。举例子：</p>
+<p><strong>alpha_anim.xml </strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">alpha</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:duration</span>=<span class="string">"1000"</span></div><div class="line">    <span class="attr">android:fromAlpha</span>=<span class="string">"1.0"</span></div><div class="line">    <span class="attr">android:interpolator</span>=<span class="string">"@android:anim/accelerate_decelerate_interpolator"</span></div><div class="line">    <span class="attr">android:toAlpha</span>=<span class="string">"0.0"</span> /&gt;</div></pre></td></tr></table></figure>
+<p><strong>scale.xm</strong> </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">scale</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:duration</span>=<span class="string">"1000"</span></div><div class="line">    <span class="attr">android:fromXScale</span>=<span class="string">"0.0"</span></div><div class="line">    <span class="attr">android:fromYScale</span>=<span class="string">"0.0"</span></div><div class="line">    <span class="attr">android:pivotX</span>=<span class="string">"50%"</span></div><div class="line">    <span class="attr">android:pivotY</span>=<span class="string">"50%"</span></div><div class="line">    <span class="attr">android:toXScale</span>=<span class="string">"1.0"</span></div><div class="line">    <span class="attr">android:toYScale</span>=<span class="string">"1.0"</span>/&gt;</div></pre></td></tr></table></figure>
+<p><strong>Activity 中</strong> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.alpha_anim);</div><div class="line">img = (ImageView) findViewById(R.id.img);</div><div class="line">img.startAnimation(animation);</div></pre></td></tr></table></figure>
+<p>更多的时候，我们会将四个属性用 set 标签结合起来使用。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:interpolator</span>=<span class="string">"@[package:]anim/interpolator_resource"</span></div><div class="line">    <span class="attr">android:shareInterpolator</span>=<span class="string">[</span>"<span class="attr">true</span>" | "<span class="attr">false</span>"] &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">alpha</span></span></div><div class="line">        <span class="attr">android:fromAlpha</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:toAlpha</span>=<span class="string">"float"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">scale</span></span></div><div class="line">        <span class="attr">android:fromXScale</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:toXScale</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:fromYScale</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:toYScale</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:pivotX</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:pivotY</span>=<span class="string">"float"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">translate</span></span></div><div class="line">        <span class="attr">android:fromXDelta</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:toXDelta</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:fromYDelta</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:toYDelta</span>=<span class="string">"float"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">rotate</span></span></div><div class="line">        <span class="attr">android:fromDegrees</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:toDegrees</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:pivotX</span>=<span class="string">"float"</span></div><div class="line">        <span class="attr">android:pivotY</span>=<span class="string">"float"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">set</span>&gt;</span></div><div class="line">        ...</div><div class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>其中稍稍一提的是</p>
+<blockquote>
+<p><strong>Interpolator ：</strong>主要是调变化的速率的。里面的属性有</p>
+<p><img src="http://img.blog.csdn.net/20141013194511797?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGFydmljODgwOTI1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<ul>
+<li>AccelerateDecelerateInterpolator   在动画开始与介绍的地方速率改变比较慢，在中间的时候加速</li>
+<li>AccelerateInterpolator                     在动画开始的地方速率改变比较慢，然后开始加速</li>
+<li>AnticipateInterpolator                      开始的时候向后然后向前甩</li>
+<li>AnticipateOvershootInterpolator     开始的时候向后然后向前甩一定值后返回最后的值</li>
+<li>BounceInterpolator                          动画结束的时候弹起</li>
+<li>CycleInterpolator                             动画循环播放特定的次数，速率改变沿着正弦曲线</li>
+<li>DecelerateInterpolator                    在动画开始的地方快然后慢</li>
+<li>LinearInterpolator                            以常量速率改变</li>
+<li>OvershootInterpolator                      向前甩一定值后再回到原来位置</li>
+</ul>
+<p><strong>像这样：android:interpolator=”@android:anim/accelerate_decelerate_interpolator”</strong> </p>
+<p><strong>pivot:</strong> 决定了当前动画执行的参考位置</p>
+<table>
+<thead>
+<tr>
+<th>pivotX取值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>距离动画所在view自身左边缘10像素</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>距离动画所在view自身左边缘 的距离是整个view宽度的10%</td>
+</tr>
+<tr>
+<td>10%p</td>
+<td>距离动画所在view父控件左边缘的距离是整个view宽度的10%</td>
+</tr>
+</tbody>
+</table>
+<p>类同 pivotY</p>
+</blockquote>
+<h2 id="属性动画"><a href="#属性动画" class="headerlink" title="属性动画"></a>属性动画</h2><p>属性动画，是针对于对象属性的动画，补间动画的四个属性也在其中，因此，所有补间动画的内容都可以通过属性动画实现。</p>
+<h3 id="属性动画达到补间动画效果"><a href="#属性动画达到补间动画效果" class="headerlink" title="属性动画达到补间动画效果"></a>属性动画达到补间动画效果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">RotateAnimation</span><span class="params">()</span> </span>&#123;</div><div class="line">      ObjectAnimator anim = ObjectAnimator.ofFloat(myView, <span class="string">"rotation"</span>, <span class="number">0f</span>, <span class="number">360f</span>);</div><div class="line">      anim.setDuration(<span class="number">1000</span>);</div><div class="line">      anim.start();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">AlpahAnimation</span><span class="params">()</span> </span>&#123;</div><div class="line">      ObjectAnimator anim = ObjectAnimator.ofFloat(myView, <span class="string">"alpha"</span>, <span class="number">1.0f</span>, <span class="number">0.8f</span>, <span class="number">0.6f</span>, <span class="number">0.4f</span>, <span class="number">0.2f</span>, <span class="number">0.0f</span>);</div><div class="line">      anim.setRepeatCount(-<span class="number">1</span>);<span class="comment">//重复执行次数。设置n，执行n+1次</span></div><div class="line">      anim.setRepeatMode(ObjectAnimator.REVERSE);<span class="comment">//重复模式，重新从头执行。</span></div><div class="line">      anim.setDuration(<span class="number">2000</span>);</div><div class="line">      anim.start();</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>如果是多组合的属性，也可以通过代码实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">                ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(myView, <span class="string">"alpha"</span>, <span class="number">1.0f</span>, <span class="number">0.5f</span>, <span class="number">0.8f</span>, <span class="number">1.0f</span>);</div><div class="line">                ObjectAnimator scaleXAnim = ObjectAnimator.ofFloat(myView, <span class="string">"scaleX"</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</div><div class="line">                ObjectAnimator scaleYAnim = ObjectAnimator.ofFloat(myView, <span class="string">"scaleY"</span>, <span class="number">0.0f</span>, <span class="number">2.0f</span>);</div><div class="line">                ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(myView, <span class="string">"rotation"</span>, <span class="number">0</span>, <span class="number">360</span>);</div><div class="line">                ObjectAnimator transXAnim = ObjectAnimator.ofFloat(myView, <span class="string">"translationX"</span>, <span class="number">100</span>, <span class="number">400</span>);</div><div class="line">                ObjectAnimator transYAnim = ObjectAnimator.ofFloat(myView, <span class="string">"tranlsationY"</span>, <span class="number">100</span>, <span class="number">750</span>);</div><div class="line">                AnimatorSet set = <span class="keyword">new</span> AnimatorSet();</div><div class="line">                set.playTogether(alphaAnim, scaleXAnim, scaleYAnim, rotateAnim, transXAnim, transYAnim);<span class="comment">//同时播放</span></div><div class="line"><span class="comment">//                set.playSequentially(alphaAnim, scaleXAnim, scaleYAnim, rotateAnim, transXAnim, transYAnim);//按顺序播放</span></div><div class="line">                set.setDuration(<span class="number">3000</span>);</div><div class="line">                set.start();</div></pre></td></tr></table></figure>
+<p>上面使用的都是 <strong>ObjectAnimator</strong> ，他继承自 <strong>ValueAnimator</strong> ，而 valueAnimator 是整个属性动画机制最核心的类。</p>
+<blockquote>
+<p>属性动画的运行机制是通过不断地对值进行操作来实现的，而初始值和结束值之间的动画过渡就是由ValueAnimator这个类来负责计算的。它的内部使用一种时间循环的机制来计算值与值之间的动画过渡，我们只需要将初始值和结束值提供给ValueAnimator，并且告诉它动画所需运行的时长，那么ValueAnimator就会自动帮我们完成从初始值平滑地过渡到结束值这样的效果。除此之外，ValueAnimator还负责管理动画的播放次数、播放模式、以及对动画设置监听器等。         —— Android SDK API 文档</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1115031-80301bbb0ae884b2.png?imageMogr2/auto-orient/strip%7CimageView2/2" alt=""></p>
+<p>上图中我们可以看出可以通过 duration, startPropertyValue, endPropertyValue 等值，设置动画时长，初始值和结束值，然后通过 <strong>start（）</strong> 方法开启动画。</p>
+<p>那么， <strong>TimeInterpolator 和 TypeEvaluator</strong> 又是干什么的呢？</p>
+<p><strong>TypeEvaluator</strong> ，意思为类型估值器。可以说是用来确定轨迹变化的。它的作用就是根据当前动画已经执行的时间占总时间的百分比来计算新的属性值。他只有一个函数，<code>evaluate( float fraction, T startValue, T endValue )</code> 其中第一个参数为已执行时间占总时间的百分比。取值为[ 0.0 - 1.0 ].这个效果出来是线性的。比如平移，移动的速率是不变的。但是我们有时候需要非线性的效果，比如，小球模拟重力效果下坠之类。那就要 TimeInterPolator</p>
+<p><strong>TimeInterpolator</strong> ，翻译的话是时间插值器。他就是通过 <code>getInterpolator( float input )</code> 来改变上面的 <strong>fraction</strong> .重写这个函数里面对 input 进行一些换算（比如 input * input）,这样动画就会越来越快。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/动画/" rel="tag"># 动画</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/04/Android 面试集锦/四大组件——Broadcast Receiver 相关/" rel="next" title="Broadcast Receiver 相关">
+                <i class="fa fa-chevron-left"></i> Broadcast Receiver 相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headlogo/head.jpg"
+               alt="ShwanYang" />
+          <p class="site-author-name" itemprop="name">ShwanYang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#传统动画"><span class="nav-number">1.</span> <span class="nav-text">传统动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#帧动画（Frame-Animation）"><span class="nav-number">1.1.</span> <span class="nav-text">帧动画（Frame Animation）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补间动画（Tweened-Animation-）"><span class="nav-number">1.2.</span> <span class="nav-text">补间动画（Tweened Animation ）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性动画"><span class="nav-number">2.</span> <span class="nav-text">属性动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性动画达到补间动画效果"><span class="nav-number">2.1.</span> <span class="nav-text">属性动画达到补间动画效果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShwanYang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

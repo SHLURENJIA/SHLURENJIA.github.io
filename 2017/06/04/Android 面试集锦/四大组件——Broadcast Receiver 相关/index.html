@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="四大组件,面试,Boradcast Reveiver," />
 
 
 
@@ -90,16 +90,17 @@
 
 
 
-<meta name="description" content="Broadcast Receiver 相关 广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
+<meta name="description" content="广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
+<meta name="keywords" content="四大组件,面试,Boradcast Reveiver">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ShwanYang">
+<meta property="og:title" content="Broadcast Receiver 相关">
 <meta property="og:url" content="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Broadcast Receiver 相关/index.html">
 <meta property="og:site_name" content="ShwanYang">
-<meta property="og:description" content="Broadcast Receiver 相关 广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
-<meta property="og:updated_time" content="2017-06-04T08:11:33.574Z">
+<meta property="og:description" content="广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
+<meta property="og:updated_time" content="2017-06-24T02:45:00.415Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ShwanYang">
-<meta name="twitter:description" content="Broadcast Receiver 相关 广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
+<meta name="twitter:title" content="Broadcast Receiver 相关">
+<meta name="twitter:description" content="广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
 
 
 
@@ -133,7 +134,7 @@
 
 
 
-  <title> | ShwanYang</title>
+  <title>Broadcast Receiver 相关 | ShwanYang</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Broadcast Receiver 相关</h1>
         
 
         <div class="post-meta">
@@ -293,6 +294,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-面试集锦/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 面试集锦</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -300,7 +323,7 @@
 
           
           
-             <span id="/2017/06/04/Android 面试集锦/四大组件——Broadcast Receiver 相关/" class="leancloud_visitors" data-flag-title="">
+             <span id="/2017/06/04/Android 面试集锦/四大组件——Broadcast Receiver 相关/" class="leancloud_visitors" data-flag-title="Broadcast Receiver 相关">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -328,8 +351,7 @@
       
 
       
-        <h1 id="Broadcast-Receiver-相关"><a href="#Broadcast-Receiver-相关" class="headerlink" title="Broadcast Receiver 相关"></a>Broadcast Receiver 相关</h1><hr>
-<h2 id="广播的动态注册和静态注册有什么区别"><a href="#广播的动态注册和静态注册有什么区别" class="headerlink" title="广播的动态注册和静态注册有什么区别"></a>广播的动态注册和静态注册有什么区别</h2><ul>
+        <h2 id="广播的动态注册和静态注册有什么区别"><a href="#广播的动态注册和静态注册有什么区别" class="headerlink" title="广播的动态注册和静态注册有什么区别"></a>广播的动态注册和静态注册有什么区别</h2><ul>
 <li>静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。</li>
 <li>动态注册，在代码里面注册，app 退出以后就无法再接受广播了。</li>
 </ul>
@@ -360,6 +382,16 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/四大组件/" rel="tag"># 四大组件</a>
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+            <a href="/tags/Boradcast-Reveiver/" rel="tag"># Boradcast Reveiver</a>
+          
+        </div>
+      
 
       
         
@@ -369,8 +401,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/04/Android 面试集锦/四大组件——Service 相关/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2017/06/04/Android 面试集锦/四大组件——Service 相关/" rel="next" title="Service 相关">
+                <i class="fa fa-chevron-left"></i> Service 相关
               </a>
             
           </div>
@@ -378,6 +410,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/05/Android 基础学习/Android 动画总结/" rel="prev" title="Android 动画总结">
+                Android 动画总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -449,7 +485,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -471,7 +507,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -506,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Broadcast-Receiver-相关"><span class="nav-number">1.</span> <span class="nav-text">Broadcast Receiver 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#广播的动态注册和静态注册有什么区别"><span class="nav-number">1.1.</span> <span class="nav-text">广播的动态注册和静态注册有什么区别</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#广播的动态注册和静态注册有什么区别"><span class="nav-number">1.</span> <span class="nav-text">广播的动态注册和静态注册有什么区别</span></a></li></ol></div>
             
 
           </div>
