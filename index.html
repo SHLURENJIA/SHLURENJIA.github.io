@@ -505,12 +505,9 @@
       
         
           
-          广播的动态注册和静态注册有什么区别
-静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。
-动态注册，在代码里面注册，app 退出以后就无法再接受广播了。
-
-
-          
+          广播的常用场景开机启动服务，网络状态改变，电量变化，短信和来电通知通过接受系统的广播让应用程序做出相应处理。
+使用注意系统或者应用发出广播的时候，将会扫描系统中所有的广播接收者，通过 action 匹配将广播发送给相应的接收者。收到广播后将
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/06/04/Android 面试集锦/四大组件——Broadcast Receiver 相关/#more" rel="contents">
@@ -661,8 +658,9 @@
         
           
           Service 的生命周期
-Service 的两种启动方法有何区别
-在 Context 中通过 public boolean bindService(Intent service, ServiceConnection conn, int f
+onCreate 里面可以做耗时操作吗？不可以。service 也是在主线程里面运行的。耗时操作会阻塞UI。
+如果需要耗时操作，你会怎么做？ 
+service 中启动子线程处理。或者使用 IntentServic
           ...
           <!--noindex-->
           <div class="post-button text-center">

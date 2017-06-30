@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="Service 的生命周期 Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service, ServiceConnection conn, int flags) 方法来进行 Service 与 Context  的关联并启动， Service 的生命周期依附于 Context （不求同生，但是同死）。 通过">
+<meta name="description" content="Service 的生命周期 onCreate 里面可以做耗时操作吗？不可以。service 也是在主线程里面运行的。耗时操作会阻塞UI。 如果需要耗时操作，你会怎么做？  service 中启动子线程处理。或者使用 IntentService ； Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service,">
 <meta name="keywords" content="四大组件,面试,Service">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Service 相关">
 <meta property="og:url" content="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Service 相关/index.html">
 <meta property="og:site_name" content="ShwanYang">
-<meta property="og:description" content="Service 的生命周期 Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service, ServiceConnection conn, int flags) 方法来进行 Service 与 Context  的关联并启动， Service 的生命周期依附于 Context （不求同生，但是同死）。 通过">
+<meta property="og:description" content="Service 的生命周期 onCreate 里面可以做耗时操作吗？不可以。service 也是在主线程里面运行的。耗时操作会阻塞UI。 如果需要耗时操作，你会怎么做？  service 中启动子线程处理。或者使用 IntentService ； Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service,">
 <meta property="og:image" content="http://i4.buimg.com/1949/3da8de2cf2c3b447.png">
-<meta property="og:updated_time" content="2017-06-24T02:45:23.964Z">
+<meta property="og:updated_time" content="2017-06-29T03:18:39.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Service 相关">
-<meta name="twitter:description" content="Service 的生命周期 Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service, ServiceConnection conn, int flags) 方法来进行 Service 与 Context  的关联并启动， Service 的生命周期依附于 Context （不求同生，但是同死）。 通过">
+<meta name="twitter:description" content="Service 的生命周期 onCreate 里面可以做耗时操作吗？不可以。service 也是在主线程里面运行的。耗时操作会阻塞UI。 如果需要耗时操作，你会怎么做？  service 中启动子线程处理。或者使用 IntentService ； Service 的两种启动方法有何区别 在 Context 中通过 public boolean bindService(Intent service,">
 <meta name="twitter:image" content="http://i4.buimg.com/1949/3da8de2cf2c3b447.png">
 
 
@@ -354,9 +354,12 @@
 
       
         <h2 id="Service-的生命周期"><a href="#Service-的生命周期" class="headerlink" title="Service 的生命周期"></a>Service 的生命周期</h2><p><img src="http://i4.buimg.com/1949/3da8de2cf2c3b447.png" alt="Service 的生命周期"></p>
+<h3 id="onCreate-里面可以做耗时操作吗？"><a href="#onCreate-里面可以做耗时操作吗？" class="headerlink" title="onCreate 里面可以做耗时操作吗？"></a>onCreate 里面可以做耗时操作吗？</h3><p>不可以。service 也是在主线程里面运行的。耗时操作会阻塞UI。</p>
+<p><strong><em>如果需要耗时操作，你会怎么做？</em> </strong></p>
+<p>service 中启动子线程处理。或者使用 IntentService ；</p>
 <h2 id="Service-的两种启动方法有何区别"><a href="#Service-的两种启动方法有何区别" class="headerlink" title="Service 的两种启动方法有何区别"></a>Service 的两种启动方法有何区别</h2><ol>
-<li>在 Context 中通过 <code>public boolean bindService(Intent service, ServiceConnection conn, int flags)</code> 方法来进行 Service 与 Context  的关联并启动， <strong>Service 的生命周期依附于 Context （不求同生，但是同死）</strong>。</li>
-<li>通过 <code>public ComponentName startService(Intent service)</code> 方法启动一个 Service，生命周期与 Context 无关。</li>
+<li>在 Context 中通过 <code>public boolean bindService(Intent service, ServiceConnection conn, int flags)</code> 方法来进行 Service 与 Context  的关联并启动， <strong>Service 的生命周期依附于 Context （不求同生，但是同死）,当启动方法销毁的时候会自动 unBind ,当发现所有的绑定都进行解绑之后才会销毁 Service</strong>。</li>
+<li>通过 <code>public ComponentName startService(Intent service)</code> 方法启动一个 Service，生命周期与 Context 无关。只有当调用 <strong>stopSelf</strong> 或者其他组件调用 <strong>stopService</strong> 服务才会停止。</li>
 </ol>
 <hr>
 <h2 id="如何保证-Sercive-不被杀死"><a href="#如何保证-Sercive-不被杀死" class="headerlink" title="如何保证 Sercive 不被杀死"></a>如何保证 Sercive 不被杀死</h2><p>首先完全不被杀死是不可能的，除非是系统级别的。能做的是杀死后采取措施让 Service 重新启动。</p>
@@ -409,7 +412,7 @@
 </ul>
 <h3 id="5-据说-手机QQ-放了一个像素在前台，顽强过小强。"><a href="#5-据说-手机QQ-放了一个像素在前台，顽强过小强。" class="headerlink" title="5. 据说 手机QQ 放了一个像素在前台，顽强过小强。"></a>5. 据说 手机QQ 放了一个像素在前台，顽强过小强。</h3><hr>
 <h2 id="IntentService-的使用场景与特点"><a href="#IntentService-的使用场景与特点" class="headerlink" title="IntentService 的使用场景与特点"></a>IntentService 的使用场景与特点</h2><blockquote>
-<p>IntentService 是 Service 的子类，是一个异步的，会自动停止的服务。很好滴解决了传统 Service 中处理完耗时操作之后忘记销毁 Service 的问题。</p>
+<p>IntentService 是 Service 的子类，是一个异步的，会自动停止的服务。很好滴解决了传统 Service 中处理完耗时操作之后忘记销毁 Service 的问题。内部还是用 handler 实现的。</p>
 </blockquote>
 <p>优点：</p>
 <ul>
@@ -605,7 +608,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-的生命周期"><span class="nav-number">1.</span> <span class="nav-text">Service 的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-的两种启动方法有何区别"><span class="nav-number">2.</span> <span class="nav-text">Service 的两种启动方法有何区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证-Sercive-不被杀死"><span class="nav-number">3.</span> <span class="nav-text">如何保证 Sercive 不被杀死</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Service-设置成-START-STICKY"><span class="nav-number">3.1.</span> <span class="nav-text">1. Service 设置成  START_STICKY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-提升-Service-优先级"><span class="nav-number">3.2.</span> <span class="nav-text">2. 提升 Service 优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-提升-Service-进程优先级"><span class="nav-number">3.3.</span> <span class="nav-text">3. 提升 Service 进程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-onDestory-方法里面重启-Service"><span class="nav-number">3.4.</span> <span class="nav-text">4. onDestory 方法里面重启 Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-据说-手机QQ-放了一个像素在前台，顽强过小强。"><span class="nav-number">3.5.</span> <span class="nav-text">5. 据说 手机QQ 放了一个像素在前台，顽强过小强。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentService-的使用场景与特点"><span class="nav-number">4.</span> <span class="nav-text">IntentService 的使用场景与特点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-的生命周期"><span class="nav-number">1.</span> <span class="nav-text">Service 的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#onCreate-里面可以做耗时操作吗？"><span class="nav-number">1.1.</span> <span class="nav-text">onCreate 里面可以做耗时操作吗？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-的两种启动方法有何区别"><span class="nav-number">2.</span> <span class="nav-text">Service 的两种启动方法有何区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证-Sercive-不被杀死"><span class="nav-number">3.</span> <span class="nav-text">如何保证 Sercive 不被杀死</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Service-设置成-START-STICKY"><span class="nav-number">3.1.</span> <span class="nav-text">1. Service 设置成  START_STICKY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-提升-Service-优先级"><span class="nav-number">3.2.</span> <span class="nav-text">2. 提升 Service 优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-提升-Service-进程优先级"><span class="nav-number">3.3.</span> <span class="nav-text">3. 提升 Service 进程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-onDestory-方法里面重启-Service"><span class="nav-number">3.4.</span> <span class="nav-text">4. onDestory 方法里面重启 Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-据说-手机QQ-放了一个像素在前台，顽强过小强。"><span class="nav-number">3.5.</span> <span class="nav-text">5. 据说 手机QQ 放了一个像素在前台，顽强过小强。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentService-的使用场景与特点"><span class="nav-number">4.</span> <span class="nav-text">IntentService 的使用场景与特点</span></a></li></ol></div>
             
 
           </div>

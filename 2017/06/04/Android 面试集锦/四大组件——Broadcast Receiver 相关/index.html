@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
+<meta name="description" content="广播的常用场景开机启动服务，网络状态改变，电量变化，短信和来电通知通过接受系统的广播让应用程序做出相应处理。 使用注意系统或者应用发出广播的时候，将会扫描系统中所有的广播接收者，通过 action 匹配将广播发送给相应的接收者。收到广播后将会产生一个广播接收者的实例。执行 onReceiver() 这个方法。但是！这个实例的生命周期只有十秒。十秒内没有结束将会报错（ANR：Application">
 <meta name="keywords" content="四大组件,面试,Boradcast Reveiver">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Broadcast Receiver 相关">
 <meta property="og:url" content="http://yoursite.com/2017/06/04/Android 面试集锦/四大组件——Broadcast Receiver 相关/index.html">
 <meta property="og:site_name" content="ShwanYang">
-<meta property="og:description" content="广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
-<meta property="og:updated_time" content="2017-06-24T02:45:00.415Z">
+<meta property="og:description" content="广播的常用场景开机启动服务，网络状态改变，电量变化，短信和来电通知通过接受系统的广播让应用程序做出相应处理。 使用注意系统或者应用发出广播的时候，将会扫描系统中所有的广播接收者，通过 action 匹配将广播发送给相应的接收者。收到广播后将会产生一个广播接收者的实例。执行 onReceiver() 这个方法。但是！这个实例的生命周期只有十秒。十秒内没有结束将会报错（ANR：Application">
+<meta property="og:updated_time" content="2017-06-30T07:19:44.335Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Broadcast Receiver 相关">
-<meta name="twitter:description" content="广播的动态注册和静态注册有什么区别 静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。 动态注册，在代码里面注册，app 退出以后就无法再接受广播了。">
+<meta name="twitter:description" content="广播的常用场景开机启动服务，网络状态改变，电量变化，短信和来电通知通过接受系统的广播让应用程序做出相应处理。 使用注意系统或者应用发出广播的时候，将会扫描系统中所有的广播接收者，通过 action 匹配将广播发送给相应的接收者。收到广播后将会产生一个广播接收者的实例。执行 onReceiver() 这个方法。但是！这个实例的生命周期只有十秒。十秒内没有结束将会报错（ANR：Application">
 
 
 
@@ -351,10 +351,35 @@
       
 
       
-        <h2 id="广播的动态注册和静态注册有什么区别"><a href="#广播的动态注册和静态注册有什么区别" class="headerlink" title="广播的动态注册和静态注册有什么区别"></a>广播的动态注册和静态注册有什么区别</h2><ul>
+        <h2 id="广播的常用场景"><a href="#广播的常用场景" class="headerlink" title="广播的常用场景"></a>广播的常用场景</h2><p>开机启动服务，网络状态改变，电量变化，短信和来电通知通过接受系统的广播让应用程序做出相应处理。</p>
+<h2 id="使用注意"><a href="#使用注意" class="headerlink" title="使用注意"></a>使用注意</h2><p>系统或者应用发出广播的时候，将会扫描系统中所有的广播接收者，通过 action 匹配将广播发送给相应的接收者。收到广播后将会产生一个广播接收者的实例。执行 <strong>onReceiver()</strong> 这个方法。<strong>但是！这个实例的生命周期只有十秒。十秒内没有结束将会报错（<code>ANR：Application Not Responding</code>）</strong> 所以不要在 onReceiver() 中执行耗时操作，也不要在里面创建子线程处理业务（业务没处理完接收者就被回收了，子线程也会被回收掉）。</p>
+<p>正确的应该是通过 in 调用 antivity 或者 service 处理业务。</p>
+<h2 id="广播的动态注册和静态注册有什么区别"><a href="#广播的动态注册和静态注册有什么区别" class="headerlink" title="广播的动态注册和静态注册有什么区别"></a>广播的动态注册和静态注册有什么区别</h2><ul>
 <li>静态注册，在 Manifest 文件里面进行注册，程序退出以后，Receiver 仍然可以接受到广播并且进行相应处理。</li>
-<li>动态注册，在代码里面注册，app 退出以后就无法再接受广播了。</li>
+<li>动态注册，在代码里面注册（onResume() 注册, onPause() 卸载），app 退出以后就无法再接受广播了。</li>
 </ul>
+<h2 id="发送广播的两种类型"><a href="#发送广播的两种类型" class="headerlink" title="发送广播的两种类型"></a>发送广播的两种类型</h2><h3 id="普通广播"><a href="#普通广播" class="headerlink" title="普通广播"></a>普通广播</h3><p>应用在需要通知各个广播接收者的情况下使用。比如开机。</p>
+<p><strong>sendBroadcast()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"android.provider.Telephony.SMS_RECEIVER"</span>);</div><div class="line">intent.putExtra(<span class="string">"data"</span>, <span class="string">"finch"</span>);<span class="comment">//少量数据</span></div><div class="line">sendBroadcast(intent);</div></pre></td></tr></table></figure>
+<p>异步，消息传递效率较高，但是无法中断广播的传播。</p>
+<h3 id="有序广播"><a href="#有序广播" class="headerlink" title="有序广播"></a>有序广播</h3><p>广播会优先发给优先级 (android:priority) 高的 Receiver。并且能决定是否终止广播的继续传播。</p>
+<p>特定拦截情境下使用。比如，黑名单短信，电话拦截。</p>
+<p><strong>sendOrderedBroadReceiver(intent, receiverPermission);</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceiver</span><span class="params">(Context context, Intent intent)</span></span>&#123;</div><div class="line">  <span class="comment">//获取上一个广播的bundle数据</span></div><div class="line">　　Bundle bundle = getResultExtras(<span class="keyword">true</span>);<span class="comment">//true：前一个广播没有结果时创建新的Bundle；false：不创建Bundle</span></div><div class="line">　　bundle.putString(<span class="string">"key"</span>, <span class="string">"777"</span>);</div><div class="line">　　<span class="comment">//将bundle数据放入广播中传给下一个广播接收者</span></div><div class="line">　　setResultExtras(bundle);　</div><div class="line">　　</div><div class="line">　　<span class="comment">//终止广播传给下一个广播接收者</span></div><div class="line">　　abortBroadcast();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="LocalBroadcastManager"><a href="#LocalBroadcastManager" class="headerlink" title="LocalBroadcastManager"></a>LocalBroadcastManager</h1><p>有时候基于数据安全考虑，我们想发送广播只有自己（本进程）能接收到，那么该如何去做呢？</p>
+<p>这就要提到 localBroadcastManager 了。</p>
+<ul>
+<li>发送的广播只在自己 app 内传播，不会泄露发给其他 app，确保隐私数据不会泄露</li>
+<li>比系统全局广播更加高效</li>
+</ul>
+<p>和系统广播使用方式类似：</p>
+<p>先通过<code>LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);</code> 获取实例</p>
+<p>然后通过函数 registerReceiver来注册监听器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">lbm.registerReceiver(<span class="keyword">new</span> BroadcastReceiver() &#123;  </div><div class="line">        <span class="meta">@Override</span>  </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;  </div><div class="line">        <span class="comment">// TODO Handle the received local broadcast  </span></div><div class="line">        &#125;  </div><div class="line">    &#125;, <span class="keyword">new</span> IntentFilter(LOCAL_ACTION));  </div><div class="line"></div><div class="line">lbm.sendBroadcast(<span class="keyword">new</span> Intent(LOCAL_ACTION));</div></pre></td></tr></table></figure>
+<h2 id="使用广播来更新界面是否合适"><a href="#使用广播来更新界面是否合适" class="headerlink" title="使用广播来更新界面是否合适"></a>使用广播来更新界面是否合适</h2><p>如果是比较频繁地更新界面，还是不要用广播了。</p>
+<p>广播也会有延时的情况。sendBroadcast 之后，广播被 activityManagerService 放入队列，但并不会马上处理。</p>
+<p>当处理到当前广播的时候，又会把这个广播分发给 ReceiverDispatcher 广播接受分发器，然后再把广播分发给 Receiver 所在的线程消息队列去处理。（UI 线程的 MessageQueue）。</p>
+<p>整个过程从发送——ActivityManagerReceiver——ReceiverDispatcher 进行了两次 Binder 进程间通信，最后还要交到UI的消息队列，如果其中·有一个的消息的处理阻塞了UI，就会延迟 onReceiver 的执行。</p>
 
       
     </div>
@@ -542,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#广播的动态注册和静态注册有什么区别"><span class="nav-number">1.</span> <span class="nav-text">广播的动态注册和静态注册有什么区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#广播的常用场景"><span class="nav-number">1.</span> <span class="nav-text">广播的常用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用注意"><span class="nav-number">2.</span> <span class="nav-text">使用注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广播的动态注册和静态注册有什么区别"><span class="nav-number">3.</span> <span class="nav-text">广播的动态注册和静态注册有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送广播的两种类型"><span class="nav-number">4.</span> <span class="nav-text">发送广播的两种类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通广播"><span class="nav-number">4.1.</span> <span class="nav-text">普通广播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有序广播"><span class="nav-number">4.2.</span> <span class="nav-text">有序广播</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LocalBroadcastManager"><span class="nav-number"></span> <span class="nav-text">LocalBroadcastManager</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用广播来更新界面是否合适"><span class="nav-number">1.</span> <span class="nav-text">使用广播来更新界面是否合适</span></a></li></ol></div>
             
 
           </div>
