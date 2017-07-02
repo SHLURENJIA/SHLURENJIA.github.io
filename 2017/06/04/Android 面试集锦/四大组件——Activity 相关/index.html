@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="ShwanYang">
 <meta property="og:description" content="Activity 基础Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 Manifest 文件中给活动进行注册。 123456789&amp;lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;singleTask&quot;&amp;gt;            &amp;lt;intent-filter&amp;gt;">
 <meta property="og:image" content="http://i4.buimg.com/1949/75a197c753928d46.png">
-<meta property="og:updated_time" content="2017-06-30T07:34:57.788Z">
+<meta property="og:updated_time" content="2017-06-30T08:31:21.588Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Activity 相关">
 <meta name="twitter:description" content="Activity 基础Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 Manifest 文件中给活动进行注册。 123456789&amp;lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;singleTask&quot;&amp;gt;            &amp;lt;intent-filter&amp;gt;">
@@ -428,6 +428,8 @@
 <li>onSaveInstanceState 如果被调用一定会在 <strong>onStop 前</strong>被调用，但是<strong>不能保证它在 onPause 前还是后调用</strong>。 </li>
 </ul>
 </blockquote>
+<p>Activity 类的 onSaveInstanceState 默认实现会恢复这个 Activity 的状态，默认实现会为布局中的每个 View 调用相应的 onSaveInstanceState 方法，让每个 View 能保存自身的信息。</p>
+<p>另外想要保存这个 View 的状态，需要在 XML 布局里面提供一个唯一的 ID 。如果是自定义控件，还需要 setSaveEnabled(true) ；</p>
 
       
     </div>
@@ -558,7 +560,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -580,7 +582,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
