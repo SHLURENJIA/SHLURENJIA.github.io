@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="ShwanYang">
 <meta property="og:description" content="Activity 基础Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 Manifest 文件中给活动进行注册。 123456789&amp;lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;singleTask&quot;&amp;gt;            &amp;lt;intent-filter&amp;gt;">
 <meta property="og:image" content="http://i4.buimg.com/1949/75a197c753928d46.png">
-<meta property="og:updated_time" content="2017-06-30T08:31:21.588Z">
+<meta property="og:updated_time" content="2017-07-11T02:04:19.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Activity 相关">
 <meta name="twitter:description" content="Activity 基础Activity 是 Android 的四大组件之一。我们在使用的时候，往往都要在 Manifest 文件中给活动进行注册。 123456789&amp;lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;singleTask&quot;&amp;gt;            &amp;lt;intent-filter&amp;gt;">
@@ -407,7 +407,7 @@
 <p>​</p>
 </li>
 </ul>
-<h2 id="几个问题"><a href="#几个问题" class="headerlink" title="几个问题"></a>几个问题</h2><h3 id="1-Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化"><a href="#1-Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化" class="headerlink" title="1. Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化"></a>1. <a href="https://shlurenjia.github.io/2017/05/31/Android%20%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/%E6%8C%89%E4%B8%8B%E8%BF%94%E5%9B%9E%E9%94%AE-Activity-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%8F%98%E5%8C%96/" target="_blank" rel="external">Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化</a></h3><h3 id="2-Activity-的缓存方法"><a href="#2-Activity-的缓存方法" class="headerlink" title="2.Activity 的缓存方法"></a>2.Activity 的缓存方法</h3><blockquote>
+<h3 id="Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化"><a href="#Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化" class="headerlink" title="Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化"></a><a href="https://shlurenjia.github.io/2017/05/31/Android%20%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/%E6%8C%89%E4%B8%8B%E8%BF%94%E5%9B%9E%E9%94%AE-Activity-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%8F%98%E5%8C%96/" target="_blank" rel="external">Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化</a></h3><h2 id="Activity-的缓存方法"><a href="#Activity-的缓存方法" class="headerlink" title="Activity 的缓存方法"></a>Activity 的缓存方法</h2><blockquote>
 <p>有两个 Activity a,b ，当从 A 进入 B 一段时间时候，可能会把 A 回收，这时候按下返回键，执行的就不是 Acticity 的 <strong>onRestart( )</strong>方法，而是 <strong>onCreate( )</strong>，A 被重新创建了一次，这时，A 中保存的临时数据和状态可能就丢失了。</p>
 <p>这就是我们为什么要对 Activity 进行缓存。</p>
 </blockquote>
@@ -560,7 +560,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -571,7 +571,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -582,7 +582,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -617,7 +617,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-基础"><span class="nav-number">1.</span> <span class="nav-text">Activity 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的启动模式"><span class="nav-number">2.</span> <span class="nav-text">Activity 的启动模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的生命周期"><span class="nav-number">3.</span> <span class="nav-text">Activity 的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个问题"><span class="nav-number">4.</span> <span class="nav-text">几个问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化"><span class="nav-number">4.1.</span> <span class="nav-text">1. Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Activity-的缓存方法"><span class="nav-number">4.2.</span> <span class="nav-text">2.Activity 的缓存方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#onSaveInstanceState-Bundle-bundle"><span class="nav-number">4.2.1.</span> <span class="nav-text">onSaveInstanceState( Bundle  bundle)</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-基础"><span class="nav-number">1.</span> <span class="nav-text">Activity 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的启动模式"><span class="nav-number">2.</span> <span class="nav-text">Activity 的启动模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的生命周期"><span class="nav-number">3.</span> <span class="nav-text">Activity 的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-A-跳转到-Activity-B-后按下返回键-A-的生命周期变化"><span class="nav-number">3.1.</span> <span class="nav-text">Activity A 跳转到 Activity B 后按下返回键 A 的生命周期变化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的缓存方法"><span class="nav-number">4.</span> <span class="nav-text">Activity 的缓存方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#onSaveInstanceState-Bundle-bundle"><span class="nav-number">4.0.1.</span> <span class="nav-text">onSaveInstanceState( Bundle  bundle)</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
