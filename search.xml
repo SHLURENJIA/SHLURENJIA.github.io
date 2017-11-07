@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[算法学习]]></title>
+    <url>%2F2017%2F11%2F07%2FAndroid%20%E9%9D%A2%E8%AF%95%E9%9B%86%E9%94%A6%2F%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%2F</url>
+    <content type="text"><![CDATA[排序选择排序(不稳定) 主要思想： 在未排序序列中找出最小的元素，添加到有序序列中。 思路： 将整个序列分为无序区和有序区，初始时候有序区为空，无序区含有待排序的所有记录。 在无序区中选取最小的元素，将它与无序区的第一个元素交换，使得有序区扩展了一位，同时无序区减少了一位。 重复 2 ，直到无序区只剩下一个记录为之。此时所有的记录已经从小到大排序完毕。 代码实现 123456789101112131415161718public static void sort(int[] array)&#123; int len = array.length; for (int i = 0; i &lt; len; i++)&#123; //对n个元素进行n-1次简单排序 int index = i; for(int j = i + 1; j &lt; len; j++)&#123; //在这层循环里面找出最小的元素 if(array[j] &lt; array[index])&#123; index = j; &#125; &#125; if(index != i)&#123; int tem = array[i]; array[i] = array[index]; array[index] = tem; &#125; &#125;&#125;]]></content>
+      <categories>
+        <category>Android 面试集锦</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Android 中图片的三级缓存]]></title>
     <url>%2F2017%2F10%2F21%2FAndroid%20%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%2FAndroid%20%E4%B8%AD%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98%2F</url>
     <content type="text"><![CDATA[什么是三级缓存？ 内存缓存，优先加载，速度最快 本地缓存，次优先加载，速度快 网络缓存，最后加载，速度慢，浪费流量 ##为什么要进行三级缓存 三级缓存策略，最实在的意义就是减少不必要的流量消耗，增加加载速度。 如今的 APP 网络交互似乎已经必不可少，通过网络获取图片再正常不过了。但是，每次启动应用都要从网络获取图片，或者是想重复浏览一些图片的时候，每次浏览都需要网络获取，消耗的流量就多了，在如今的流量资费来说，肯定会容易影响用户数量。 还有就是网络加载图片，有时候会加载很慢，影响了用户体验。 另外从开发角度来说，Bitmap 的创建非常消耗时间和内存，可能导致频繁GC。而使用缓存策略，会更加高效地加载 Bitmap，减少卡顿，从而减少读取时间。 而内存缓存的主要作用是防止应用重复将图片数据读取到内存当中，硬盘缓存则是防止应用重复从网络或其他地方重复下载和读取数据。 三级缓存的原理 首次加载的时候通过网络加载，获取图片，然后保存到内存和 SD 卡中。 之后运行 APP 时，优先访问内存中的图片缓存。 如果内存没有，则加载本地 SD 卡中的图片。 ​ 具体的缓存策略可以是这样的：内存作为一级缓存，本地作为二级缓存，网络加载为最后。其中，内存使用 LruCache ，其内部通过 LinkedhashMap 来持有外界缓存对象的强引用；对于本地缓存，使用 DiskLruCache。加载图片的时候，首先使用 LRU 方式进行寻找，找不到指定内容，按照三级缓存的方式，进行本地搜索，还没有就网络加载。 ##图片缓存代码实现 自己实现一个三级缓存的工具类并不困难。大概可以这样： 123456789101112131415161718192021222324252627282930public class BitmapUtil&#123; //单例模式 //··· public void displayImage(ImageView img, String url)&#123; Bitmap bitmap; //内存缓存，url做唯一标识符 bitmap = loadBitmapFromMemoryCache(url); if(bitmap != null)&#123; img.setImageBitmap(bitmap); return ; &#125; //本地缓存 bitmap = loadBitmapFromDiskCache(url); if(bitmap != null)&#123; img.setImageBitmap(bitmap); //然后将本地缓存保存到内存缓存中 return ; &#125; //网络缓存 bitmap = loadBitmapFromNet(url); if(bitmap != null)&#123; img.setImageBitmap(bitmap); //同理将缓存保存到内存和本地中 return; &#125; &#125; &#125; 详细不说了，网上有很多类似的文章可以参考。 关于内存缓存的实现核心基本就是获取APP最大内存，然后set的时候用LruCache&lt; url , bitmap&gt; put 进去。他会按照最近最少使用的算法将内存控制在一定大小内，超出的时候自动回收。 还有一点注意的是，一般url作为 key 的时候，会用MD5算法处理一下，最后是用其 MD5 值作为key的，这可能是为了避免一些特殊字符影响使用。 关于Glide的缓存事实上，现在已经很少自己封装一个三级缓存策略，在众多的图片框架中都加入缓存策略，实现起来更简单。这里以 Glide 为例。 Glide 的使用基本就是一行代码就解决了。像下面这样 123456789101112131415// 加载本地图片File file = new File(getExternalCacheDir() + "/image.jpg");Glide.with(this).load(file).into(imageView);// 加载应用资源int resource = R.drawable.image;Glide.with(this).load(resource).into(imageView);// 加载二进制流byte[] image = getImageBytes();Glide.with(this).load(image).into(imageView);// 加载Uri对象Uri imageUri = getImageUri();Glide.with(this).load(imageUri).into(imageView); 当然应用到项目里面最好二次封装一下。这些不是这次文章的主题。我们回到缓存上面来。 Glide 的内存缓存Glide 是默认开启了内存缓存的，只要你通过 Glide 加载一张图片，他就会缓存到内存中，只要他还没被从内存中清理之前，下次使用 Glide 都会从内存缓存中加载。大大提升了图片加载的效率。 当然如果你有特殊要求，可以添加一行代码把默认开启的内存缓存关闭掉。 1234Glide.with(this) .load(url) .skipMemoryCache(true)//关闭内存缓存 .into(imageView); Glide 的内存缓存实际上和我们上面说的差别不大，使用的也是LruCache算法，不过他还结合了一种弱引用机制，共同完成了内存缓存功能。 详情可以看文末参考文章郭霖大神关于Glide源码的解析。 Glide 的硬盘缓存关于 Glide 硬盘缓存使用也是十分简单。 1234Glide.with(this) .load(url) .diskCacheStrategy(DiskCacheStrategy.RESULT) .into(imageView); 一个 diskCacheStrategy( ) 方法就可以调整他的硬盘缓存策略。其中可以传入的参数有四种： DiskCacheStrategy.NONE： 表示不缓存任何内容。 DiskCacheStrategy.SOURCE： 表示只缓存原始图片。 DiskCacheStrategy.RESULT： 表示只缓存转换过后的图片（默认选项）。 DiskCacheStrategy.ALL ： 表示既缓存原始图片，也缓存转换过后的图片。 Glide 的硬盘缓存是默认将图片压缩转换后再缓存到硬盘中，这种处理方式再避免OOM的时候会经常看见。 如果需要改变硬盘缓存策略只需要改变其传入的参数即可。 参考文章： Android图片加载框架最全解析（三），深入探究Glide的缓存机制 —— 郭霖 Android中图片的三级缓存——wanbo_]]></content>
@@ -55,9 +66,9 @@
         <category>Android 面试集锦</category>
       </categories>
       <tags>
+        <tag>Boradcast Reveiver</tag>
         <tag>面试</tag>
         <tag>四大组件</tag>
-        <tag>Boradcast Reveiver</tag>
       </tags>
   </entry>
   <entry>
@@ -68,9 +79,9 @@
         <category>Android 面试集锦</category>
       </categories>
       <tags>
-        <tag>Service</tag>
         <tag>面试</tag>
         <tag>四大组件</tag>
+        <tag>Service</tag>
       </tags>
   </entry>
   <entry>
@@ -81,9 +92,9 @@
         <category>Android 面试集锦</category>
       </categories>
       <tags>
-        <tag>Activity</tag>
         <tag>面试</tag>
         <tag>四大组件</tag>
+        <tag>Activity</tag>
       </tags>
   </entry>
   <entry>
