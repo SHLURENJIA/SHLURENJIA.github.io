@@ -95,10 +95,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="四大组件——ContentProvider 相关">
 <meta property="og:url" content="http://yoursite.com/2017/11/08/Android 面试集锦/四大组件——ContentProvider-相关/index.html">
-<meta property="og:site_name" content="ShwanYang">
+<meta property="og:site_name" content="ShawnYang">
 <meta property="og:description" content="ContentProvider简介​    ContentProvider 是用来跨程序共享数据的。比如很常见的访问短信，通信录，还有手机相册。他提供了一套完整的机制，允许一个程序访问另外一个程序中的数据，同时还能保证访问数据的安全性。 ​    不过在对此深入前，还要先掌握运行时权限。 运行时权限​    权限机制一直都有，我们一般就是在 Menifest 里面注册一下。事实上这样的权限对用户安">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2214054-6514971d30fa2bb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-08T08:45:39.097Z">
+<meta property="og:updated_time" content="2017-11-09T15:08:16.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="四大组件——ContentProvider 相关">
 <meta name="twitter:description" content="ContentProvider简介​    ContentProvider 是用来跨程序共享数据的。比如很常见的访问短信，通信录，还有手机相册。他提供了一套完整的机制，允许一个程序访问另外一个程序中的数据，同时还能保证访问数据的安全性。 ​    不过在对此深入前，还要先掌握运行时权限。 运行时权限​    权限机制一直都有，我们一般就是在 Menifest 里面注册一下。事实上这样的权限对用户安">
@@ -136,7 +136,7 @@
 
 
 
-  <title>四大组件——ContentProvider 相关 | ShwanYang</title>
+  <title>四大组件——ContentProvider 相关 | ShawnYang</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -174,7 +174,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">ShwanYang</span>
+        <span class="site-title">ShawnYang</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -260,13 +260,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/08/Android 面试集锦/四大组件——ContentProvider-相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ShwanYang">
+      <meta itemprop="name" content="易向阳">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/headlogo/head.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ShwanYang">
+      <meta itemprop="name" content="ShawnYang">
     </span>
 
     
@@ -342,6 +342,48 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/2214054-6514971d30fa2bb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="危险权限.png"></p>
 </blockquote>
 <p>​    要注意的是，我们在申请这些危险权限的时候，如果是申请某一个危险权限，用户同意授权后，那么该权限所在的整组权限也会同时被授予。</p>
+<blockquote>
+<p> <strong>代码举例（暂时忽略，可以去查看<a href="https://shlurenjia.github.io/2017/11/08/Android%20%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/Android%20%E8%B0%83%E7%94%A8%E7%9B%B8%E6%9C%BA%E7%9B%B8%E5%86%8C%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/" target="_blank" rel="external">Android 调用相机相册并上传图片</a>里面有涉及）</strong></p>
+</blockquote>
+<hr>
+<h2 id="ContentResolver-的基本用法"><a href="#ContentResolver-的基本用法" class="headerlink" title="ContentResolver 的基本用法"></a>ContentResolver 的基本用法</h2><p>对于没一个应用来说，想要访问内容提供器中共享的数据，就一定要会借助 ContentResolver 类。可以通过Context 中的 getContentResolver() 获取实例，对其进行 CRUD 操作。返回的是一个Cursor，其使用起来和SQLite类似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Cursor cursor = getContentResolver().query(</div><div class="line">	uri,</div><div class="line">  		projection,</div><div class="line">  		selection,</div><div class="line">  		selectionArgs,</div><div class="line">  		sortOrder);</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Query()方法参数</th>
+<th>对应SQL部分</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uri</td>
+<td>from table_name</td>
+<td>指定某个应用下的某张表</td>
+</tr>
+<tr>
+<td>projection</td>
+<td>select column1,column2</td>
+<td>指定查询的列名</td>
+</tr>
+<tr>
+<td>selection</td>
+<td>where column = value</td>
+<td>指定 where 的约束条件</td>
+</tr>
+<tr>
+<td>selectionArgs</td>
+<td>-</td>
+<td>为 Where 中</td>
+</tr>
+<tr>
+<td>orderBy</td>
+<td>order by column1，column2</td>
+<td>指定查询结果的排序方式</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -457,8 +499,8 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/headlogo/head.jpg"
-               alt="ShwanYang" />
-          <p class="site-author-name" itemprop="name">ShwanYang</p>
+               alt="易向阳" />
+          <p class="site-author-name" itemprop="name">易向阳</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
           
@@ -468,7 +510,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -490,7 +532,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -525,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ContentProvider简介"><span class="nav-number">1.</span> <span class="nav-text">ContentProvider简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时权限"><span class="nav-number">2.</span> <span class="nav-text">运行时权限</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ContentProvider简介"><span class="nav-number">1.</span> <span class="nav-text">ContentProvider简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时权限"><span class="nav-number">2.</span> <span class="nav-text">运行时权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ContentResolver-的基本用法"><span class="nav-number">3.</span> <span class="nav-text">ContentResolver 的基本用法</span></a></li></ol></div>
             
 
           </div>
@@ -552,7 +594,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">ShwanYang</span>
+  <span class="author" itemprop="copyrightHolder">易向阳</span>
 </div>
 
 
