@@ -75,7 +75,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,Activity," />
 
 
 
@@ -91,12 +91,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="ShawnYang">
-<meta property="og:url" content="http://yoursite.com/categories/Android-基础学习/index.html">
+<meta name="description" content="前言： 因为之前被大佬问道这个问题，回来记录一下： 两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？   明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 onRestart（）方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：  明显可见，Activity A 创建完毕（">
+<meta name="keywords" content="Android,Activity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="按下返回键 Activity 的生命周期变化">
+<meta property="og:url" content="http://yoursite.com/Android 问题记录/按下返回键-Activity-的生命周期变化.html">
 <meta property="og:site_name" content="ShawnYang">
+<meta property="og:description" content="前言： 因为之前被大佬问道这个问题，回来记录一下： 两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？   明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 onRestart（）方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：  明显可见，Activity A 创建完毕（">
+<meta property="og:image" content="http://i1.piimg.com/1949/2d5cfb117b2e873a.png">
+<meta property="og:updated_time" content="2017-05-31T13:10:02.907Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ShawnYang">
+<meta name="twitter:title" content="按下返回键 Activity 的生命周期变化">
+<meta name="twitter:description" content="前言： 因为之前被大佬问道这个问题，回来记录一下： 两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？   明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 onRestart（）方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：  明显可见，Activity A 创建完毕（">
+<meta name="twitter:image" content="http://i1.piimg.com/1949/2d5cfb117b2e873a.png">
 
 
 
@@ -124,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/Android-基础学习/"/>
+  <link rel="canonical" href="http://yoursite.com/Android 问题记录/按下返回键-Activity-的生命周期变化.html"/>
 
 
 
 
 
-  <title>分类: Android 基础学习 | ShawnYang</title>
+  <title>按下返回键 Activity 的生命周期变化 | ShawnYang</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -157,7 +164,7 @@
   
 
   
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -241,157 +248,235 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>Android 基础学习<small>分类</small>
-      </h1>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/Android 基础学习/Android 调用相机相册并上传图片.html" itemprop="url">
-              
-                <span itemprop="name">Android 调用相机相册并上传图片</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-08T16:54:18+08:00"
-              content="2017-11-08" >
-          11-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/Android 基础学习/Android 中图片的三级缓存.html" itemprop="url">
-              
-                <span itemprop="name">Android 中图片的三级缓存</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-21T18:56:54+08:00"
-              content="2017-10-21" >
-          10-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/Android 基础学习/Android 首页轮播图和list混合（RecyclerView 添加 Header）.html" itemprop="url">
-              
-                <span itemprop="name">Android 首页轮播图和list混合（RecyclerView 添加 Header）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-01T22:46:43+08:00"
-              content="2017-07-01" >
-          07-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/Android 基础学习/Android 动画总结.html" itemprop="url">
-              
-                <span itemprop="name">Android 动画总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-05T22:39:04+08:00"
-              content="2017-06-05" >
-          06-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/Android 基础学习/Android 中的消息机制.html" itemprop="url">
-              
-                <span itemprop="name">Android 中的消息机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-05-12T23:10:15+08:00"
-              content="2017-05-12" >
-          05-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Android 问题记录/按下返回键-Activity-的生命周期变化.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="易向阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShawnYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">按下返回键 Activity 的生命周期变化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T20:36:53+08:00">
+                2017-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-问题记录/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 问题记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+
+          
+            
+          
+
+          
+          
+             <span id="/Android 问题记录/按下返回键-Activity-的生命周期变化.html" class="leancloud_visitors" data-flag-title="按下返回键 Activity 的生命周期变化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  249
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>前言：</strong></p>
+<p>因为之前被大佬问道这个问题，回来记录一下：</p>
+<p>两个活动，从 Activity A 跳转到 Activity B 之后，按下返回键，Activity A 的生命周期变化？</p>
+</blockquote>
+<hr>
+<p>明显，这是一个生命周期问题。我回来之后，先创建了两个 Activity，并且重写了包括 <strong>onRestart（）</strong>方法在内的生命周期的方法，用 Log 打印输出。最后结果如下：</p>
+<p><img src="http://i1.piimg.com/1949/2d5cfb117b2e873a.png" alt=""></p>
+<p>明显可见，Activity A 创建完毕（ <strong>onResume</strong> ）后，点击跳转，Activity A 就进入 <strong>onPause</strong> 状态，这时候就是  Activity B开始创建了，当 Activity B 创建完毕可见（ <strong>onResume</strong> ）后，Activity A 进入 <strong>onStop</strong> 状态。此时 A 不可见，B 可见。</p>
+<p>点击返回键之后，B 进入 <strong>onPause</strong> 状态，而 A 调用 <strong>onStart</strong> 方法，走正常的周期流程。而 B 就进入销毁的程序。</p>
+<p>过程如下：</p>
+<blockquote>
+<p>onCreate(A) -&gt; onStart(A) -&gt; onResume(A) </p>
+<p>-&gt; 点击跳转到 B -&gt; onPause(A) -&gt; onCreate(B) -&gt; onStart(B) -&gt; onResume(B) -&gt; onStop(A)</p>
+<p>-&gt; 按下返回键 -&gt; onPause(B) -&gt; onRestart(A) -&gt; onStart(A) -&gt; onResume(A) -&gt; onStop(B) -&gt; onDestroy(B)</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Activity/" rel="tag"># Activity</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android 基础学习/Android 中的消息机制.html" rel="next" title="Android 中的消息机制">
+                <i class="fa fa-chevron-left"></i> Android 中的消息机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android 面试集锦/四大组件——Activity 相关.html" rel="prev" title="Activity 相关">
+                Activity 相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -399,6 +484,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -594,6 +683,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 

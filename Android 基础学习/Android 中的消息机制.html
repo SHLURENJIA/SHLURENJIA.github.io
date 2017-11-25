@@ -1,0 +1,905 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+<meta name="baidu-site-verification" content="9BhFMqhXTE" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android 基础知识,AsyncTask," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言 涉及知识点：  消息机制：Handler、Looper 和 MessageQueue AsyncTask 基本使用 实现一个简单的 SimpleAsyncTask   消息机制Android 中的消息机制由三大部分组成：Handler、Looper 和 MessageQueue. Looper 就是创建一个 MessageQueue，然后进入一个死循环里面不断地读取 MessageQueue">
+<meta name="keywords" content="Android 基础知识,AsyncTask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 中的消息机制">
+<meta property="og:url" content="http://yoursite.com/Android 基础学习/Android 中的消息机制.html">
+<meta property="og:site_name" content="ShawnYang">
+<meta property="og:description" content="前言 涉及知识点：  消息机制：Handler、Looper 和 MessageQueue AsyncTask 基本使用 实现一个简单的 SimpleAsyncTask   消息机制Android 中的消息机制由三大部分组成：Handler、Looper 和 MessageQueue. Looper 就是创建一个 MessageQueue，然后进入一个死循环里面不断地读取 MessageQueue">
+<meta property="og:image" content="http://i2.muimg.com/1949/6799409b4f61a6e2.png">
+<meta property="og:image" content="http://i2.muimg.com/1949/cb8a536cf78afcde.png">
+<meta property="og:image" content="http://i4.buimg.com/1949/8d88e3930f746cda.png">
+<meta property="og:updated_time" content="2017-07-02T12:32:21.391Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 中的消息机制">
+<meta name="twitter:description" content="前言 涉及知识点：  消息机制：Handler、Looper 和 MessageQueue AsyncTask 基本使用 实现一个简单的 SimpleAsyncTask   消息机制Android 中的消息机制由三大部分组成：Handler、Looper 和 MessageQueue. Looper 就是创建一个 MessageQueue，然后进入一个死循环里面不断地读取 MessageQueue">
+<meta name="twitter:image" content="http://i2.muimg.com/1949/6799409b4f61a6e2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Android 基础学习/Android 中的消息机制.html"/>
+
+
+
+
+
+  <title>Android 中的消息机制 | ShawnYang</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShawnYang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Android 基础学习/Android 中的消息机制.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="易向阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShawnYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 中的消息机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T23:10:15+08:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-基础学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 基础学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+
+          
+            
+          
+
+          
+          
+             <span id="/Android 基础学习/Android 中的消息机制.html" class="leancloud_visitors" data-flag-title="Android 中的消息机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,341
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p><strong>涉及知识点：</strong></p>
+<ul>
+<li>消息机制：Handler、Looper 和 MessageQueue</li>
+<li>AsyncTask 基本使用</li>
+<li>实现一个简单的 SimpleAsyncTask</li>
+</ul>
+</blockquote>
+<h2 id="消息机制"><a href="#消息机制" class="headerlink" title="消息机制"></a>消息机制</h2><p>Android 中的消息机制由三大部分组成：<strong>Handler、Looper 和 MessageQueue</strong>.</p>
+<p>Looper 就是创建一个 MessageQueue，然后进入一个死循环里面不断地读取 MessageQueue 里面的消息，Handler 就是消息的创建者，处理者。</p>
+<p><img src="http://i2.muimg.com/1949/6799409b4f61a6e2.png" alt="消息机制"></p>
+<p>由图我们可以看出，消息队列被封装在了 MessageQueue 中，通过 Looper 和线程 Thread 关联起来。而 Handler 又通过 Looper 关联，因而 Handler 最终和线程、线程的消息队列关联上来了。这也就是为什么我们常说更新 UI 的 Handler 必须要在主线程中创建，因为只有在主线程中创建，Handler 才能和主线程的消息队列关联上，这样 handleMessage 才会执行在 UI 线程，这时候更新 UI 才是线程安全的。</p>
+<blockquote>
+<p>题外话：为什么常说只能在 UI 线程更新 UI ？</p>
+<p>子线程可以有好多个，但如果每个子线程都直接对UI元素进行操作，界面会混乱不堪，线程会面临安全问题，虽然可以通过加锁机制来解决线程的安全问题，但是加锁会降低运行效率， 所以主线程（UI线程）并没进行加锁限制多线程访问，  可能这就是“出于性能优化考虑”。</p>
+<p>既然没有对多线程访问进行限制，而且子线程依然有进行UI操作的需求，那么该如何解决呢？</p>
+<p>所以Android规定只能在主线程中进行UI元素的更改，你们一帮菜鸡子线程如果还执意要来修改我管辖的用户界面 就必须先通知我（主线程），我来帮你们完成 :)</p>
+<p>——知乎用户：大大大大头啊</p>
+</blockquote>
+<h2 id="创建自己的消息队列"><a href="#创建自己的消息队列" class="headerlink" title="创建自己的消息队列"></a><strong>创建自己的消息队列</strong></h2><p>我们知道了基本的消息机制。但是，要注意的是，Android 中除了 UI 线程，创建的工作线程默认是没有消息循环和消息队列的。</p>
+<p>在非主线程直接 new Handler(); 会报错 </p>
+<p><code>Uncaught handler: thread Thread-8 exiting due to uncaught exception</code></p>
+<p><code>java.lang.RuntimeException: Can&#39;t create handler inside thread that has not called Looper.prepare()</code></p>
+<p>所以，如果想让自己创建的工作线程 <strong>有消息循环和消息队列，并具有消息处理机制，就需要在线程中先调用 Looper.prepare() 来创建消息队列，然后调用 Loop.loop() 进入消息循环</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyloopThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">  Handler mHandler;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">    Loop.prepare();</div><div class="line">    </div><div class="line">    mHandler = <span class="keyword">new</span> Handler()&#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span>&#123;</div><div class="line">        <span class="comment">// process incoming message here</span></div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">    Loop.loop();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="AsyncTask-基本使用"><a href="#AsyncTask-基本使用" class="headerlink" title="AsyncTask 基本使用"></a>AsyncTask 基本使用</h2><p>我们往往使用 Thread 创建子线程进行耗时操作，但是由于不能在子线程更新 UI，一般就会使用 Handler 发送消息给 UI 线程然后再更新。这个操作起来有点麻烦，在多个任务同时执行的时候，不易于对线程进行精细控制。于是 AsyncTask 应运而生。</p>
+<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncTask</span>&lt; <span class="title">Param</span>, <span class="title">Progress</span>, <span class="title">Result</span> &gt; ( ) </span></div><div class="line">&gt; //三个泛型类型： &lt; 参数类型，后台执行任务的进度类型，返回的结果类型 &gt; 如果不需要某个类型可以设置为 <span class="title">void</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>一个异步任务一般包含以下步骤：</p>
+<p><img src="http://i2.muimg.com/1949/cb8a536cf78afcde.png" alt="AsyncTask"></p>
+<h2 id="实现一个简单的-AsyncTask"><a href="#实现一个简单的-AsyncTask" class="headerlink" title="实现一个简单的 AsyncTask"></a>实现一个简单的 AsyncTask</h2><p>下面我们来实现一个简单的 AsyncTask，类名为 SimpleAsyncTask。与 AsyncTask 类似，提供了三个函数：<strong>onPreExecute( )、 doInBackground( )、onPostExecute( )</strong>。泛型参数为了方便只有一个 doInBackgroud( ) 函数返回值类型的泛型参数。SimpleAsyncTask 执行起来和 AsyncTask 基本一样。首先是 onPreExecute 函数在任务运行之前执行，而且运行在 UI 线程之中。doInBackgroud 运行在后台执行耗时操作，并且将结果返回。onPostExecute 含有一个参数，这个参数就是 doInBaskgroud 的返回结果，onPostExecute 执行在 UI 线程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span>  <span class="class"><span class="keyword">class</span> <span class="title">SimpleAsyncTask</span>&lt;<span class="title">Result</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HandlerThread HT = <span class="keyword">new</span> HandlerThread(<span class="string">"SimpleAsyncTask"</span>,</div><div class="line">            Process.THREAD_PRIORITY_BACKGROUND);</div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        HT.start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">final</span> Handler mUIHandler = <span class="keyword">new</span> Handler(Looper.getMainLooper());</div><div class="line">    <span class="keyword">final</span> Handler mAsyncHandler = <span class="keyword">new</span> Handler(HT.getLooper());</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * @功能描述：onPreExecute 任务执行之前的初始化操作等</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPreExecute</span><span class="params">()</span></span>&#123;&#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 后台执行任务</div><div class="line">     * <span class="doctag">@return</span> 返回执行结果</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Result <span class="title">doInBackground</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 返回结果传递给执行在 UI 线程的 onPostExecute</div><div class="line">     * <span class="doctag">@param</span> result 执行结果</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecuted</span><span class="params">(Result result)</span></span>&#123; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> SimpleAsyncTask&lt;Result&gt; <span class="title">excute</span> <span class="params">()</span> </span>&#123;</div><div class="line">        onPreExecute();</div><div class="line"></div><div class="line">        mAsyncHandler.post(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                postResult(doInBackground());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">postResult</span><span class="params">(<span class="keyword">final</span> Result result)</span></span>&#123;</div><div class="line">        mUIHandler.post(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                onPostExecuted(result);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 SimpleAsyncTask 里面首先创建了一个 HandlerThread（自带消息队列的 Thread），当线程启动之后就会构建它的消息队列，所以构建完成后，直接在静态代码块里面启动了该线程。然后创建了两个 Handler，分别关联 UI 线程和 HandlerThread 的子线程 mAsyncHandler。剩下三个函数已经解释过了，有需要的时候我们可以重写这三个方法。</p>
+<p><strong>execute</strong> 是执行的函数，里面先调用 onPreExecute，然后 doInBackground 函数被一个 Runnbale 包装通过 mAsyncTask 提交给了 HandlerThread 线程执行，当得到结果的时候又通过 mUIHandler 将结果提交到一个 Runnable 里面，这个 Runnbale 中执行了 onPostExecute。</p>
+<p>下面是调用的示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> SimpleAsyncTask&lt;String&gt;() &#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">makeToast</span><span class="params">(String msg)</span></span>&#123;</div><div class="line">        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPreExecute</span><span class="params">()</span> </span>&#123;</div><div class="line">        makeToast(<span class="string">"onPreExecute"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> String <span class="title">doInBackground</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            Thread.sleep(<span class="number">6000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="string">"doInBackground finish!"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecuted</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        makeToast(<span class="string">"onPostExecuted"</span>+s);</div><div class="line">    &#125;</div><div class="line">&#125;.excute();</div></pre></td></tr></table></figure>
+<p>执行结果就是先 Toast：onPreExecute，延时 6 秒之后 Toast： onPostExecuted doInBackground  finish！</p>
+<p><img src="http://i4.buimg.com/1949/8d88e3930f746cda.png" alt="执行结果"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-基础知识/" rel="tag"># Android 基础知识</a>
+          
+            <a href="/tags/AsyncTask/" rel="tag"># AsyncTask</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android 自定义控件/下拉刷新（Scroller 的使用）.html" rel="next" title="下拉刷新的实现原理（Scroller 的使用）">
+                <i class="fa fa-chevron-left"></i> 下拉刷新的实现原理（Scroller 的使用）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android 问题记录/按下返回键-Activity-的生命周期变化.html" rel="prev" title="按下返回键 Activity 的生命周期变化">
+                按下返回键 Activity 的生命周期变化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headlogo/head.jpg"
+               alt="易向阳" />
+          <p class="site-author-name" itemprop="name">易向阳</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息机制"><span class="nav-number">2.</span> <span class="nav-text">消息机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建自己的消息队列"><span class="nav-number">3.</span> <span class="nav-text">创建自己的消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsyncTask-基本使用"><span class="nav-number">4.</span> <span class="nav-text">AsyncTask 基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现一个简单的-AsyncTask"><span class="nav-number">5.</span> <span class="nav-text">实现一个简单的 AsyncTask</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">易向阳</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

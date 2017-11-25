@@ -1,0 +1,896 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+<meta name="baidu-site-verification" content="9BhFMqhXTE" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="RecyclerView,轮播图 Banner," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="使用 convenientBanner 轮播图给 RecyclerView 添加 header先来看看效果图。我们要实现的就是上面轮播图轮播，下面是列表 list 展示数据。实际应用中很多都会使用轮播图去插入广告，活动等。 那么我们要怎么实现呢？ 思路有很多，可以用 ViewPager 去实现轮播图，不过使用比较麻烦，要自己实现无限循环轮播，自动轮播等。 还可以用 RecyclerView 去打造">
+<meta name="keywords" content="RecyclerView,轮播图 Banner">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 首页轮播图和list混合（RecyclerView 添加 Header）">
+<meta property="og:url" content="http://yoursite.com/Android 基础学习/Android 首页轮播图和list混合（RecyclerView 添加 Header）.html">
+<meta property="og:site_name" content="ShawnYang">
+<meta property="og:description" content="使用 convenientBanner 轮播图给 RecyclerView 添加 header先来看看效果图。我们要实现的就是上面轮播图轮播，下面是列表 list 展示数据。实际应用中很多都会使用轮播图去插入广告，活动等。 那么我们要怎么实现呢？ 思路有很多，可以用 ViewPager 去实现轮播图，不过使用比较麻烦，要自己实现无限循环轮播，自动轮播等。 还可以用 RecyclerView 去打造">
+<meta property="og:image" content="http://i4.piimg.com/1949/8b0c6e8138a7bcfc.gif">
+<meta property="og:updated_time" content="2017-07-02T02:23:48.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 首页轮播图和list混合（RecyclerView 添加 Header）">
+<meta name="twitter:description" content="使用 convenientBanner 轮播图给 RecyclerView 添加 header先来看看效果图。我们要实现的就是上面轮播图轮播，下面是列表 list 展示数据。实际应用中很多都会使用轮播图去插入广告，活动等。 那么我们要怎么实现呢？ 思路有很多，可以用 ViewPager 去实现轮播图，不过使用比较麻烦，要自己实现无限循环轮播，自动轮播等。 还可以用 RecyclerView 去打造">
+<meta name="twitter:image" content="http://i4.piimg.com/1949/8b0c6e8138a7bcfc.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Android 基础学习/Android 首页轮播图和list混合（RecyclerView 添加 Header）.html"/>
+
+
+
+
+
+  <title>Android 首页轮播图和list混合（RecyclerView 添加 Header） | ShawnYang</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShawnYang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Android 基础学习/Android 首页轮播图和list混合（RecyclerView 添加 Header）.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="易向阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShawnYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 首页轮播图和list混合（RecyclerView 添加 Header）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-01T22:46:43+08:00">
+                2017-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-基础学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 基础学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+
+          
+            
+          
+
+          
+          
+             <span id="/Android 基础学习/Android 首页轮播图和list混合（RecyclerView 添加 Header）.html" class="leancloud_visitors" data-flag-title="Android 首页轮播图和list混合（RecyclerView 添加 Header）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,519
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="使用-convenientBanner-轮播图给-RecyclerView-添加-header"><a href="#使用-convenientBanner-轮播图给-RecyclerView-添加-header" class="headerlink" title="使用 convenientBanner 轮播图给 RecyclerView 添加 header"></a>使用 convenientBanner 轮播图给 RecyclerView 添加 header</h2><p>先来看看效果图。我们要实现的就是上面轮播图轮播，下面是列表 list 展示数据。实际应用中很多都会使用轮播图去插入广告，活动等。</p>
+<p>那么我们要怎么实现呢？</p>
+<p>思路有很多，可以用 ViewPager 去实现轮播图，不过使用比较麻烦，要自己实现无限循环轮播，自动轮播等。</p>
+<p>还可以用 RecyclerView 去打造一个轮播图。<code>LinearSnapHelper</code> 可以帮助你滑动停止的时候某页居中。设置定时器可以实现自动轮播。</p>
+<p>这里我们并不使用以上的方法，我们使用外部的框架 convenientBanner 去直接使用轮播图。有关详细使用可以搜一下或者点<a href="https://github.com/saiwu-bigkoo/Android-ConvenientBanner" target="_blank" rel="external">github地址</a> 有说明。</p>
+<p><img src="http://i4.piimg.com/1949/8b0c6e8138a7bcfc.gif" alt="效果图"></p>
+<h3 id="项目开始"><a href="#项目开始" class="headerlink" title="项目开始"></a>项目开始</h3><p>新建之后添加依赖</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//    轮播器</span></div><div class="line">compile <span class="string">'com.bigkoo:convenientbanner:2.0.5'</span></div><div class="line"><span class="comment">//图片加载框架</span></div><div class="line">compile <span class="string">'com.github.bumptech.glide:glide:3.7.0'</span></div></pre></td></tr></table></figure>
+<p>因为这里的例子是使用网络图片加载的方式，所以还要添加网络权限和存储权限。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_EXTERNAL_STORAGE"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>主布局添加 RecyclerView 即可。整个主界面其实就是一个 RecyclerView，轮播图其实是 Rv 根据不同的 Type 添加不同的 View 来放到 Rv 头部的。后面会再提到。</p>
+<p>另外就是 rv_header_banner.xml，这个就是放到 Rv 头部的。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">com.bigkoo.convenientbanner.ConvenientBanner</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/banner"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">app:canLoop</span>=<span class="string">"true"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>还有一个 rv_header_img.xml。这个是构建 Banner 的视图的时候用到。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span> <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/iv_head"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:scaleType</span>=<span class="string">"centerCrop"</span>/&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>最后一个 rv_item.xml，这个是展示 list 数据。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/tv_item"</span></div><div class="line">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"20dp"</span></div><div class="line">        <span class="attr">android:textSize</span>=<span class="string">"20sp"</span></div><div class="line">        <span class="attr">android:text</span>=<span class="string">"item"</span></div><div class="line">        <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>以上布局基本完成。</p>
+<p>细心的人会发现，轮播图那里有几个小点指示器。这个的样式是我们自定义的。所以我们这里还要在 drawable 下新建两个圆点的样式文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">shape</span></span></div><div class="line">    <span class="attr">android:shape</span>=<span class="string">"oval"</span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#BDBDBD"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">size</span> <span class="attr">android:height</span>=<span class="string">"10dp"</span> <span class="attr">android:width</span>=<span class="string">"10dp"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></div><div class="line"></div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">shape</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">android:shape</span>=<span class="string">"oval"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#D32F2F"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">size</span> <span class="attr">android:width</span>=<span class="string">"10dp"</span> <span class="attr">android:height</span>=<span class="string">"10dp"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Adapter"><a href="#Adapter" class="headerlink" title="Adapter"></a>Adapter</h3><p>在这里，Adapter 配置的核心是根据不同的 itemType 加载不同的 View。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 根据不同的 ViewType 返回不同的 ViewHolder</div><div class="line"> * 通过 setter 方法将不同的 View 注入进 Adapter</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">MyAdapter</span>.<span class="title">MyViewHolder</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TYPE_HEADER = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TYPE_NOMAL = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> View mHeaderView;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;String&gt; mDatas = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> OnItemClickListener mListener;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">getmHeaderView</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mHeaderView;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setmHeaderView</span><span class="params">(View mHeaderView)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.mHeaderView = mHeaderView;</div><div class="line">        notifyItemInserted(<span class="number">0</span>);<span class="comment">//插入下标0位置</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addDatas</span><span class="params">(List&lt;String&gt; datas)</span></span>&#123;</div><div class="line">        mDatas.addAll(datas);</div><div class="line">        notifyDataSetChanged();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(mHeaderView == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> TYPE_NOMAL;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(position == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> TYPE_HEADER;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> TYPE_NOMAL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> MyViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(mHeaderView != <span class="keyword">null</span> &amp;&amp; viewType == TYPE_HEADER)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> MyViewHolder(mHeaderView);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item, parent, <span class="keyword">false</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyViewHolder(itemView);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(MyViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (getItemViewType(position) == TYPE_HEADER) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> pos = getRealPosition(holder);<span class="comment">//这里的 position 实际需要不包括 header</span></div><div class="line">        <span class="keyword">final</span> String data = mDatas.get(pos);</div><div class="line"></div><div class="line">        holder.textView.setText(data);</div><div class="line">        <span class="keyword">if</span>(mListener == <span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">        holder.itemView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">                mListener.onItemClick(pos, data);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 添加头部布局后的位置</div><div class="line">     * headerView 不为空则 position - 1</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getRealPosition</span><span class="params">(MyViewHolder holder)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> position = holder.getLayoutPosition();</div><div class="line">        <span class="keyword">return</span> mHeaderView == <span class="keyword">null</span> ? position : position - <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//header 不为空，则 rv 的总 Count 需要 +1（把 Header 加上算一个 item）</span></div><div class="line">        <span class="keyword">return</span> mHeaderView == <span class="keyword">null</span> ? mDatas.size() : mDatas.size() + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> </span>&#123;</div><div class="line">        TextView textView;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span><span class="params">(View itemView)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(itemView);</div><div class="line">            <span class="keyword">if</span>(itemView == mHeaderView)&#123; <span class="keyword">return</span>; &#125;</div><div class="line">            textView = (TextView) itemView.findViewById(R.id.tv_item);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnItemClickListener</span><span class="params">(OnItemClickListener listener)</span></span>&#123;</div><div class="line">            mListener = listener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnItemClickListener</span></span>&#123;<span class="comment">//item 点击事件接口</span></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(<span class="keyword">int</span> position, String data)</span></span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上是 Adapter 的代码，可见加了两个 TYPE 来区分 header 和 正常的数据 item。（我们也可以加更多的 Type 去实现更复杂的布局）在 <code>onCreateViewHolder</code> 里面判断 TYPE 如果是 header 则返回 headerView，否则加载正常的 item 布局。里面一些函数还有逻辑都加了注释说明了，这里就不详细说了。</p>
+<h3 id="MainActivity"><a href="#MainActivity" class="headerlink" title="MainActivity"></a>MainActivity</h3><p>让我们回到 MainActivity，这里我们将初始化 Banner，并用 <code>adapter.setmHeaderView</code> 放进 Adapter 中。在使用 LayoutManager 设置一下 Rv 的布局，然后就基本完成了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initBanner</span><span class="params">()</span></span>&#123;</div><div class="line">        networkImage = Arrays.asList(images);</div><div class="line"></div><div class="line">        mBanner.setPages(<span class="keyword">new</span> CBViewHolderCreator&lt;NetWorkImageHolderView&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> NetWorkImageHolderView <span class="title">createHolder</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">new</span> NetWorkImageHolderView();</div><div class="line">            &#125;</div><div class="line">        &#125;, networkImage)</div><div class="line">                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT) <span class="comment">//设置指示器的方向（左、中、右）</span></div><div class="line">                .setPageIndicator(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123; R.drawable.indicator_gray, R.drawable.indicator_red &#125;)<span class="comment">//设置指示器样式</span></div><div class="line">                .setOnItemClickListener(<span class="keyword">this</span>)<span class="comment">//点击事件</span></div><div class="line">                .setScrollDuration(<span class="number">1500</span>);<span class="comment">//滑动的时间</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;<span class="comment">//Banner 点击事件</span></div><div class="line">        Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"Banner:"</span>+position, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NetWorkImageHolderView</span> <span class="keyword">implements</span> <span class="title">Holder</span>&lt;<span class="title">String</span>&gt;</span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> ImageView imageView;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> View <span class="title">createView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">            View view = LayoutInflater.from(context).inflate(R.layout.rv_header_img, <span class="keyword">null</span>);</div><div class="line">            imageView = (ImageView) view.findViewById(R.id.iv_head);</div><div class="line">            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);</div><div class="line">            <span class="keyword">return</span> view;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UpdateUI</span><span class="params">(Context context, <span class="keyword">int</span> position, String data)</span> </span>&#123;</div><div class="line">            <span class="comment">//Glide.with(context).load(data.getImgUrl()).into(imageView);</span></div><div class="line">            Log.d(<span class="string">"imgUrl"</span>, <span class="string">"UpdateUI: "</span>+data);</div><div class="line">            Glide.with(context).load(data).placeholder(R.mipmap.ic_launcher_round).into(imageView);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> convenientBanner 的基本设置就是这样。通过 <code>setPages</code> 来配置，上面的配置都加了注释不详细说明，更多的配置样式可以查查。这里面的 <code>NetWorkImageHolderView</code> 是为了给 Banner 绑定 View。</p>
+<p> mBanner 绑定的是 <code>rv_header_banner</code> 视图下的 <code>banner</code> 。而 <code>NetWorkImageHolderView</code> 里面的 view 绑定了 <code>rv_header_img</code>.里面的图片 ImageView 则是绑定了 <code>R.id.iv_head</code> 这个 img 控件。 <strong>总的来说，Banner 的视图 View 实际是 <code>NetWorkImageHolderView</code> 的 <code>onCreateView</code> 里面返回的。类同 Adapter 的使用</strong></p>
+<p><code>UpdateUI</code> 这里用 Glide 加载了网络图片。Glide 不是这里的主角所以不说明了，用法也很简单。placeholder 是设置占位图。</p>
+<p>以上就基本完成了 Banner 的配置。在 <code>onResume</code> 里面添加一句 <strong>mBanner.startTurning(3000)</strong> 就可以自动轮播了。</p>
+<p>剩下的就是 Rv 的基本用法了。</p>
+<p>还有需要的可以看一下我的源码。</p>
+<p><a href="">这次demo的源码点这里</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RecyclerView/" rel="tag"># RecyclerView</a>
+          
+            <a href="/tags/轮播图-Banner/" rel="tag"># 轮播图 Banner</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android 基础学习/Android 动画总结.html" rel="next" title="Android 动画总结">
+                <i class="fa fa-chevron-left"></i> Android 动画总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android 自动化测试/使用 MonkeyRunner 进行自动化测试.html" rel="prev" title="使用 MonkeyRunner 进行自动化测试">
+                使用 MonkeyRunner 进行自动化测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headlogo/head.jpg"
+               alt="易向阳" />
+          <p class="site-author-name" itemprop="name">易向阳</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-convenientBanner-轮播图给-RecyclerView-添加-header"><span class="nav-number">1.</span> <span class="nav-text">使用 convenientBanner 轮播图给 RecyclerView 添加 header</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目开始"><span class="nav-number">1.1.</span> <span class="nav-text">项目开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布局"><span class="nav-number">1.2.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adapter"><span class="nav-number">1.3.</span> <span class="nav-text">Adapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MainActivity"><span class="nav-number">1.4.</span> <span class="nav-text">MainActivity</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">易向阳</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

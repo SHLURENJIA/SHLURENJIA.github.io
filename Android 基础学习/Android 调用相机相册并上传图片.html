@@ -1,0 +1,885 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+<meta name="baidu-site-verification" content="9BhFMqhXTE" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="相机,上传," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言头像几乎是每个应用必备的，那么上传头像需要怎么样的操作呢？ 最基本的就是使用相机或者从相册选取图片，裁剪压缩过后，上传到服务器。 拍照/从相册中选取打开相机弹窗提示选择拍照或者从相册中选取图片。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
+<meta name="keywords" content="相机,上传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 调用相机相册并上传图片">
+<meta property="og:url" content="http://yoursite.com/Android 基础学习/Android 调用相机相册并上传图片.html">
+<meta property="og:site_name" content="ShawnYang">
+<meta property="og:description" content="前言头像几乎是每个应用必备的，那么上传头像需要怎么样的操作呢？ 最基本的就是使用相机或者从相册选取图片，裁剪压缩过后，上传到服务器。 拍照/从相册中选取打开相机弹窗提示选择拍照或者从相册中选取图片。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
+<meta property="og:updated_time" content="2017-11-08T08:54:18.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 调用相机相册并上传图片">
+<meta name="twitter:description" content="前言头像几乎是每个应用必备的，那么上传头像需要怎么样的操作呢？ 最基本的就是使用相机或者从相册选取图片，裁剪压缩过后，上传到服务器。 拍照/从相册中选取打开相机弹窗提示选择拍照或者从相册中选取图片。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Android 基础学习/Android 调用相机相册并上传图片.html"/>
+
+
+
+
+
+  <title>Android 调用相机相册并上传图片 | ShawnYang</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShawnYang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Android 基础学习/Android 调用相机相册并上传图片.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="易向阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShawnYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 调用相机相册并上传图片</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-08T16:54:18+08:00">
+                2017-11-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-基础学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 基础学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+
+          
+            
+          
+
+          
+          
+             <span id="/Android 基础学习/Android 调用相机相册并上传图片.html" class="leancloud_visitors" data-flag-title="Android 调用相机相册并上传图片">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,676
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>头像几乎是每个应用必备的，那么上传头像需要怎么样的操作呢？</p>
+<p>最基本的就是使用相机或者从相册选取图片，裁剪压缩过后，上传到服务器。</p>
+<h2 id="拍照-从相册中选取"><a href="#拍照-从相册中选取" class="headerlink" title="拍照/从相册中选取"></a>拍照/从相册中选取</h2><h3 id="打开相机"><a href="#打开相机" class="headerlink" title="打开相机"></a>打开相机</h3><p>弹窗提示选择拍照或者从相册中选取图片。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">    <span class="comment">/**</span></div><div class="line">     * 点击更换项目头像</div><div class="line">     * 可以选择拍照或者从相册选取</div><div class="line">     * 图片需要经过裁剪压缩上传</div><div class="line">     */</div><div class="line">    <span class="meta">@OnClick</span>(R.id.iv_project_img)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">changeProjectImg</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//此处进行弹窗选择处理</span></div><div class="line">        AlertDialog.Builder alertDialog = <span class="keyword">new</span> AlertDialog.Builder(<span class="keyword">this</span>);</div><div class="line">        alertDialog.setTitle(<span class="string">"更换项目头像"</span>);</div><div class="line">        alertDialog.setItems(<span class="keyword">new</span> String[]&#123;<span class="string">"拍照"</span>, <span class="string">"从相册选取"</span>&#125;, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</div><div class="line">                <span class="keyword">switch</span>(which)&#123;</div><div class="line">                    <span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">                        <span class="comment">//拍照,调用系统相机</span></div><div class="line">                        <span class="comment">//创建File，用于存储拍照后的图片</span></div><div class="line">                        File outputImage = <span class="keyword">new</span> File(getExternalCacheDir(),<span class="string">"output_image.jpg"</span>);</div><div class="line">                        <span class="keyword">try</span> &#123;</div><div class="line">                            <span class="keyword">if</span> (outputImage.exists()) &#123;</div><div class="line">                                outputImage.delete();</div><div class="line">                            &#125;</div><div class="line">                            outputImage.createNewFile();</div><div class="line">                        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                            e.printStackTrace();</div><div class="line">                        &#125;</div><div class="line">                        <span class="comment">//启动相机程序</span></div><div class="line">                        Intent intent = <span class="keyword">new</span> Intent(<span class="string">"android.media.action.IMAGE_CAPTURE"</span>);</div><div class="line">                        <span class="keyword">if</span>(SDK_INT &gt;= <span class="number">24</span>)&#123;</div><div class="line">                            imageUri = FileProvider.getUriForFile(CreateProjectActivity.<span class="keyword">this</span>,</div><div class="line">                                    <span class="string">"com.example.cameraalbumtest.fileprovider"</span>, outputImage);</div><div class="line">                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);<span class="comment">//这里加入flag</span></div><div class="line">                            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);</div><div class="line">                        &#125; <span class="keyword">else</span> &#123;</div><div class="line">                            imageUri = Uri.fromFile(outputImage);</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);</div><div class="line">                        startActivityForResult(intent, TASK_PHOTO);</div><div class="line"></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                        <span class="comment">//权限检查，动态申请权限。</span></div><div class="line">                        <span class="comment">//相册存于SD卡，所以要 WRITE_EXTERNAL_STORAGE 授予对SD卡的读写权限</span></div><div class="line">                        <span class="keyword">if</span>(ContextCompat.checkSelfPermission(CreateProjectActivity.<span class="keyword">this</span>,</div><div class="line">                                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)&#123;</div><div class="line">                            ActivityCompat.requestPermissions(CreateProjectActivity.<span class="keyword">this</span>,</div><div class="line">                                    <span class="keyword">new</span> String[]&#123;Manifest.permission.WRITE_EXTERNAL_STORAGE&#125;,<span class="number">1</span>);</div><div class="line">                        &#125; <span class="keyword">else</span> &#123;</div><div class="line">                            <span class="comment">//打开相册</span></div><div class="line">                            openAlbum();</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    <span class="keyword">default</span>:</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        alertDialog.show();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* 申请权限结果返回处理</div><div class="line">*/</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(<span class="keyword">int</span> requestCode, @NonNull String[] permissions, @NonNull <span class="keyword">int</span>[] grantResults)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span>(requestCode)&#123;</div><div class="line">            <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                <span class="keyword">if</span>(grantResults.length &gt; <span class="number">0</span> &amp;&amp; grantResults[<span class="number">0</span>] == PackageManager.PERMISSION_GRANTED)&#123;</div><div class="line">                    openAlbum();</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    Toast.makeText(<span class="keyword">this</span>, <span class="string">"没有权限，无法打开相册！"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>由于使用了provider，还需要再Manifest文件那里声明，并且在res下new directory ，包名为xml，然后再新建一个xml文件，文件名为file_paths。代码如下：</p>
+<p>Manifest.xml:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">application</span></span></div><div class="line">             ···</div><div class="line">             &gt;</div><div class="line">  </div><div class="line">  <span class="tag">&lt;<span class="name">provider</span></span></div><div class="line">            <span class="attr">android:name</span>=<span class="string">"android.support.v4.content.FileProvider"</span></div><div class="line">            <span class="attr">android:authorities</span>=<span class="string">"com.example.cameraalbumtest.fileprovider"</span></div><div class="line">            <span class="attr">android:exported</span>=<span class="string">"false"</span></div><div class="line">            <span class="attr">android:grantUriPermissions</span>=<span class="string">"true"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">               <span class="attr">android:name</span>=<span class="string">"android.support.FILE_PROVIDER_PATHS"</span></div><div class="line">               <span class="attr">android:resource</span>=<span class="string">"@xml/file_paths"</span>/&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">provider</span>&gt;</span></div><div class="line">  </div><div class="line">  ···</div><div class="line">  <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>file_paths.xml:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Paths</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">external-path</span> <span class="attr">name</span>=<span class="string">"my_images"</span> <span class="attr">path</span>=<span class="string">""</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Paths</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>至此，调用系统相机基本完成。</p>
+<h3 id="打开相册"><a href="#打开相册" class="headerlink" title="打开相册"></a>打开相册</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * 打开相册</div><div class="line">  */</div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">openAlbum</span><span class="params">()</span> </span>&#123;</div><div class="line">     File galleryFile = <span class="keyword">new</span> File(getExternalCacheDir(),<span class="string">"crop_image.jpg"</span>);</div><div class="line">     <span class="keyword">try</span> &#123;</div><div class="line">         <span class="keyword">if</span> (galleryFile.exists()) &#123;</div><div class="line">             galleryFile.delete();</div><div class="line">         &#125;</div><div class="line">         galleryFile.createNewFile();</div><div class="line">     &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">         e.printStackTrace();</div><div class="line">     &#125;</div><div class="line">     Intent intentAlbum = <span class="keyword">new</span> Intent(<span class="string">"android.intent.action.GET_CONTENT"</span>);</div><div class="line">     intentAlbum.addCategory(Intent.CATEGORY_OPENABLE);</div><div class="line">     intentAlbum.setType(<span class="string">"image/*"</span>);</div><div class="line">     <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;<span class="comment">//如果大于等于7.0使用FileProvider</span></div><div class="line">         Uri uriForFile = FileProvider.getUriForFile</div><div class="line">                 (<span class="keyword">this</span>, <span class="string">"com.example.cameraalbumtest.fileprovider"</span>, galleryFile);</div><div class="line">         intentAlbum.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);</div><div class="line">         intentAlbum.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);</div><div class="line">         intentAlbum.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);</div><div class="line">     &#125; <span class="keyword">else</span> &#123;</div><div class="line">         intentAlbum.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(galleryFile));</div><div class="line">     &#125;</div><div class="line">     startActivityForResult(intentAlbum, CHOSE_PHOTO);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h3 id="裁剪处理"><a href="#裁剪处理" class="headerlink" title="裁剪处理"></a>裁剪处理</h3><p>先接收返回的图片，转换成对应的Uri，然后调用裁剪（crop）方法进行裁剪。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * 此处处理返回的图片</div><div class="line">  * <span class="doctag">@param</span> requestCode</div><div class="line">  * <span class="doctag">@param</span> resultCode</div><div class="line">  * <span class="doctag">@param</span> data</div><div class="line">  */</div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">     <span class="keyword">switch</span>(requestCode)&#123;</div><div class="line">         <span class="keyword">case</span> TASK_PHOTO:<span class="comment">//拍照</span></div><div class="line">             <span class="keyword">if</span>(resultCode == RESULT_OK)&#123;</div><div class="line">                 File temp = <span class="keyword">new</span> File(getExternalCacheDir(),<span class="string">"output_image.jpg"</span>);</div><div class="line">                 Uri photoUri;</div><div class="line">                 <span class="keyword">if</span>(SDK_INT &gt;= <span class="number">24</span>)&#123;</div><div class="line">                     photoUri = FileProvider.getUriForFile(CreateProjectActivity.<span class="keyword">this</span>,</div><div class="line">                             <span class="string">"com.example.cameraalbumtest.fileprovider"</span>, temp);</div><div class="line">                 &#125; <span class="keyword">else</span> &#123;</div><div class="line">                     photoUri = Uri.fromFile(temp);</div><div class="line">                 &#125;</div><div class="line"></div><div class="line">                 crop(photoUri);</div><div class="line">             &#125;</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">         <span class="keyword">case</span> CHOSE_PHOTO:</div><div class="line">             <span class="keyword">if</span>(resultCode == RESULT_OK)&#123;</div><div class="line">                 <span class="comment">//判断手机系统版本号</span></div><div class="line">                 <span class="keyword">if</span>(Build.VERSION.SDK_INT &gt;= <span class="number">19</span>)&#123;</div><div class="line">                     <span class="comment">//4.4及以上可以使用此方法处理图片</span></div><div class="line">                     handleImageOnKitkat(data);</div><div class="line">                 &#125; <span class="keyword">else</span> &#123;</div><div class="line">                     handleImageBeforeKitkat(data);</div><div class="line">                 &#125;</div><div class="line"></div><div class="line">             &#125;</div><div class="line">         <span class="keyword">case</span> CUT_PHOTO:</div><div class="line">             File temp = <span class="keyword">new</span> File(getExternalCacheDir(),<span class="string">"crop_image.jpg"</span>);</div><div class="line">             Uri imageUri = FileProvider.getUriForFile(CreateProjectActivity.<span class="keyword">this</span>,</div><div class="line">                     <span class="string">"com.example.cameraalbumtest.fileprovider"</span>, temp);</div><div class="line">             Bitmap bitmap = <span class="keyword">null</span>;</div><div class="line">             <span class="keyword">try</span> &#123;</div><div class="line">                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));</div><div class="line">             &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">                 e.printStackTrace();</div><div class="line">             &#125;</div><div class="line">             mProjectImg.setImageBitmap(bitmap);</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">         <span class="keyword">default</span>:</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">     &#125;</div><div class="line"> &#125;    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">     <span class="keyword">switch</span>(requestCode)&#123;</div><div class="line">         <span class="keyword">case</span> TASK_PHOTO:</div><div class="line">             <span class="keyword">if</span>(resultCode == RESULT_OK)&#123;</div><div class="line">                 <span class="keyword">try</span> &#123;</div><div class="line">                     Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));</div><div class="line">                     mProjectImg.setImageBitmap(bitmap);</div><div class="line">                 &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">                     e.printStackTrace();</div><div class="line">                 &#125;</div><div class="line">             &#125;</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">         <span class="keyword">default</span>:</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleImageBeforeKitkat</span><span class="params">(Intent data)</span> </span>&#123;</div><div class="line">     Uri uri = data.getData();</div><div class="line">     crop(uri);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line">  * 相册返回图片处理。</div><div class="line">  * 大于4.4版本</div><div class="line">  * <span class="doctag">@param</span> data 相册返回的Intent</div><div class="line">  */</div><div class="line"> <span class="meta">@TargetApi</span>(<span class="number">19</span>)</div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleImageOnKitkat</span><span class="params">(Intent data)</span> </span>&#123;</div><div class="line">     String imagePath = <span class="keyword">null</span>;</div><div class="line">     Uri uri = data.getData();</div><div class="line">     <span class="keyword">if</span>(DocumentsContract.isDocumentUri(<span class="keyword">this</span>,uri))&#123;</div><div class="line">         <span class="comment">//如果是Document类型的uri，则通过 document id 处理</span></div><div class="line">         String docId = DocumentsContract.getDocumentId(uri);</div><div class="line">         <span class="keyword">if</span>(<span class="string">"com.android.providers.media.documents"</span>.equals(uri.getAuthority())) &#123;</div><div class="line">             String id = docId.split(<span class="string">":"</span>)[<span class="number">1</span>];<span class="comment">//解析出数字格式的id</span></div><div class="line">             String selection = MediaStore.Images.Media._ID + <span class="string">"="</span> + id;</div><div class="line">             imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);</div><div class="line">         &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"com.android.providers.downloads.documents"</span>.equals(uri.getAuthority()))&#123;</div><div class="line">             Uri contentUri = ContentUris.withAppendedId(Uri.parse(<span class="string">"content://downloads/public_downloads"</span>),</div><div class="line">                     Long.valueOf(docId));</div><div class="line">             imagePath = getImagePath(contentUri, <span class="keyword">null</span>);</div><div class="line">         &#125;</div><div class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"content"</span>.equalsIgnoreCase(uri.getScheme()))&#123;</div><div class="line">         <span class="comment">//如果是普通类型的Uri，则使用普通当时处理</span></div><div class="line">         imagePath = getImagePath(uri, <span class="keyword">null</span>);</div><div class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"file"</span>.equalsIgnoreCase(uri.getScheme())) &#123;</div><div class="line">         <span class="comment">//如果是File类型的uri，直接获取图片路径即可</span></div><div class="line">         imagePath = uri.getPath();</div><div class="line">     &#125;</div><div class="line">     <span class="comment">//根据图片路径显示图片</span></div><div class="line">     <span class="comment">//displayImage(imagePath);</span></div><div class="line"></div><div class="line">     <span class="comment">//Environment.getExternalStorageDirectory() + "/" +</span></div><div class="line">     File temp = <span class="keyword">new</span> File(imagePath);</div><div class="line">     Uri imgUri;</div><div class="line">     <span class="keyword">if</span>(SDK_INT &gt;= <span class="number">24</span>) &#123;</div><div class="line">         imgUri = FileProvider.getUriForFile(<span class="keyword">this</span>, <span class="string">"com.example.cameraalbumtest.fileprovider"</span>, temp);</div><div class="line">     &#125; <span class="keyword">else</span> &#123;</div><div class="line">         imgUri = Uri.fromFile(temp);</div><div class="line">     &#125;</div><div class="line">     crop(imgUri);</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line">  * 通过uri和selection来获取图片的真实路径</div><div class="line">  * <span class="doctag">@param</span> uri</div><div class="line">  * <span class="doctag">@param</span> selection</div><div class="line">  * <span class="doctag">@return</span></div><div class="line">  */</div><div class="line"> <span class="function"><span class="keyword">private</span> String <span class="title">getImagePath</span><span class="params">(Uri uri, String selection)</span> </span>&#123;</div><div class="line">     String path = <span class="keyword">null</span>;</div><div class="line">     <span class="comment">//通过uri和selection来获取图片的真是路径</span></div><div class="line">     Cursor cursor = getContentResolver().query(uri, <span class="keyword">null</span>, selection, <span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">     <span class="keyword">if</span>(cursor != <span class="keyword">null</span>)&#123;</div><div class="line">         <span class="keyword">if</span>(cursor.moveToFirst())&#123;</div><div class="line">             path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));</div><div class="line">         &#125;</div><div class="line">         cursor.close();</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> path;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>裁剪图片方法如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 裁剪图片</div><div class="line"> * <span class="doctag">@param</span> uri</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">crop</span><span class="params">(Uri uri)</span></span>&#123;</div><div class="line">    File cropFile = <span class="keyword">new</span> File(getExternalCacheDir(),<span class="string">"crop_image.jpg"</span>);</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">if</span> (cropFile.exists()) &#123;</div><div class="line">            cropFile.delete();</div><div class="line">        &#125;</div><div class="line">        cropFile.createNewFile();</div><div class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">    Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.android.camera.action.CROP"</span>);</div><div class="line">    <span class="keyword">if</span>(SDK_INT &gt;= <span class="number">24</span>)&#123;</div><div class="line">        Uri outputUri = Uri.fromFile(cropFile);</div><div class="line">        intent.setDataAndType(uri, <span class="string">"image/*"</span>);</div><div class="line">        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);</div><div class="line">        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);</div><div class="line">        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        Uri outputUri = Uri.fromFile(cropFile);</div><div class="line">        intent.setDataAndType(uri, <span class="string">"image/*"</span>);</div><div class="line">        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);</div><div class="line">    &#125;</div><div class="line">    intent.putExtra(<span class="string">"crop"</span>,<span class="string">"true"</span>);</div><div class="line">    <span class="comment">//裁剪框的比例为1:1</span></div><div class="line">    intent.putExtra(<span class="string">"aspectX"</span>,<span class="number">1</span>);</div><div class="line">    intent.putExtra(<span class="string">"aspectY"</span>,<span class="number">1</span>);</div><div class="line">    <span class="comment">//裁剪后输出图片的尺寸大小</span></div><div class="line">    intent.putExtra(<span class="string">"outputX"</span>,<span class="number">250</span>);</div><div class="line">    intent.putExtra(<span class="string">"outputY"</span>,<span class="number">250</span>);</div><div class="line">    <span class="comment">//图片格式</span></div><div class="line">    intent.putExtra(<span class="string">"outputFormat"</span>,<span class="string">"PNG"</span>);</div><div class="line">    intent.putExtra(<span class="string">"noFaceDetection"</span>, <span class="keyword">false</span>);<span class="comment">// 取消人脸识别</span></div><div class="line">    intent.putExtra(<span class="string">"return-data"</span>, <span class="keyword">false</span>);<span class="comment">// true:不返回uri，false：返回uri</span></div><div class="line">    startActivityForResult(intent, CUT_PHOTO);<span class="comment">//同样的在onActivityResult中处理剪裁好的图</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上，一个本地的拍照/打开相册更换图片基本就完成了。然后就是把图片上传到服务器。</p>
+<h2 id="把图片上传到服务器"><a href="#把图片上传到服务器" class="headerlink" title="把图片上传到服务器"></a>把图片上传到服务器</h2><p>我使用的是 retrofit 网络请求框架，上传对他来说也很简单。同时因为后台是后端云Bmob，文档上说支持文本和二进制流的方式上传，所以我没有用<strong>@Multipart</strong> 进行传输，只是普通的RequestBody。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IImagePost</span></span>&#123;</div><div class="line">  <span class="meta">@POST</span>(<span class="string">"2/files/&#123;fileName&#125;"</span>)</div><div class="line">  <span class="meta">@Headers</span>(&#123;</div><div class="line">    <span class="string">"X-Bmob-Application-Id:xxx"</span>,</div><div class="line">    <span class="string">"X-Bmob-REST-API-Key:xxx"</span>,</div><div class="line">    <span class="string">"Content-Type:application/x-png"</span></div><div class="line">  &#125;)</div><div class="line">  Call &lt;ImageResult&gt; imagePost(<span class="meta">@Path</span>(<span class="string">"fileName"</span>) String fileName, <span class="meta">@Body</span> RequestBody file);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//-------------</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">imagePost</span><span class="params">(File file, <span class="keyword">final</span> ResultCallback resultCallback)</span></span>&#123;</div><div class="line">  IImagePost iImagePost = mRetrofit.create(IImagePost.class);</div><div class="line"></div><div class="line">  RequestBody requestFile = RequestBody</div><div class="line">    .create(MediaType.parse(<span class="string">"multipart/form-data"</span>), file);</div><div class="line"></div><div class="line">  Call&lt;ImageResult&gt; call = iImagePost.imagePost(file.getName(), requestFile);</div><div class="line"></div><div class="line">  call.enqueue(<span class="keyword">new</span> Callback&lt;ImageResult&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call&lt;ImageResult&gt; call, Response&lt;ImageResult&gt; response)</span> </span>&#123;</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        resultCallback.onSuccess(response);</div><div class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call&lt;ImageResult&gt; call, Throwable t)</span> </span>&#123;</div><div class="line">      resultCallback.onFailed();</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ResultCallback 是我自定义的接口回调，在图片裁剪上传的类中可以这样调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* 将头像上传到服务器</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ImageUpload</span><span class="params">()</span></span>&#123;</div><div class="line">  File temp = <span class="keyword">new</span> File(getExternalCacheDir(),<span class="string">"crop_image.png"</span>);</div><div class="line"></div><div class="line">  HttpUtil.getInstance().imagePost(temp, <span class="keyword">new</span> HttpUtil.ResultCallback() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailed</span><span class="params">()</span> </span>&#123;</div><div class="line">      Toast.makeText(CreateProjectActivity.<span class="keyword">this</span>, <span class="string">"连接服务器失败"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">      <span class="keyword">if</span>(response.isSuccessful())&#123;</div><div class="line">        mImageResult = (ImageResult) response.body();</div><div class="line">        <span class="comment">//返回图片的url等信息，自行处理</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>以上，一个调取系统相机拍照/从相册中获取图片，然后裁剪，上传的基本功能就完成了。</p>
+<p>PS：这里没有对图片进行压缩处理，留待完善。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/相机/" rel="tag"># 相机</a>
+          
+            <a href="/tags/上传/" rel="tag"># 上传</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android 面试集锦/四大组件——ContentProvider-相关.html" rel="next" title="四大组件——ContentProvider 相关">
+                <i class="fa fa-chevron-left"></i> 四大组件——ContentProvider 相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android 面试集锦/算法学习.html" rel="prev" title="算法学习">
+                算法学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headlogo/head.jpg"
+               alt="易向阳" />
+          <p class="site-author-name" itemprop="name">易向阳</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拍照-从相册中选取"><span class="nav-number">2.</span> <span class="nav-text">拍照/从相册中选取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开相机"><span class="nav-number">2.1.</span> <span class="nav-text">打开相机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开相册"><span class="nav-number">2.2.</span> <span class="nav-text">打开相册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#裁剪处理"><span class="nav-number">2.3.</span> <span class="nav-text">裁剪处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把图片上传到服务器"><span class="nav-number">3.</span> <span class="nav-text">把图片上传到服务器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">易向阳</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

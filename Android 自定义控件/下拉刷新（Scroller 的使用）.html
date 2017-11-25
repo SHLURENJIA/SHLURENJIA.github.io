@@ -1,0 +1,897 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+<meta name="baidu-site-verification" content="9BhFMqhXTE" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android 自定义控件," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364">
+<meta name="keywords" content="Android 自定义控件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="下拉刷新的实现原理（Scroller 的使用）">
+<meta property="og:url" content="http://yoursite.com/Android 自定义控件/下拉刷新（Scroller 的使用）.html">
+<meta property="og:site_name" content="ShawnYang">
+<meta property="og:description" content="前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2214054-becefa825b66efbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-14T12:57:03.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="下拉刷新的实现原理（Scroller 的使用）">
+<meta name="twitter:description" content="前言 涉及知识点：  Scroller 使用   自定义 ViewGroup Measure 测量 View   onTouchEvent 函数    初始化视图12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2214054-becefa825b66efbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Android 自定义控件/下拉刷新（Scroller 的使用）.html"/>
+
+
+
+
+
+  <title>下拉刷新的实现原理（Scroller 的使用） | ShawnYang</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShawnYang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Android 自定义控件/下拉刷新（Scroller 的使用）.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="易向阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShawnYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">下拉刷新的实现原理（Scroller 的使用）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T09:47:20+08:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-自定义控件/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 自定义控件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+
+          
+            
+          
+
+          
+          
+             <span id="/Android 自定义控件/下拉刷新（Scroller 的使用）.html" class="leancloud_visitors" data-flag-title="下拉刷新的实现原理（Scroller 的使用）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,691
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p><strong>涉及知识点：</strong></p>
+<ul>
+<li>Scroller 使用</li>
+</ul>
+<ul>
+<li>自定义 ViewGroup<ul>
+<li>Measure 测量 View</li>
+</ul>
+</li>
+<li>onTouchEvent 函数</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="初始化视图"><a href="#初始化视图" class="headerlink" title="初始化视图"></a>初始化视图</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">RefreshLayoutBase</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">View</span>&gt; <span class="keyword">extends</span> <span class="title">ViewGroup</span> <span class="keyword">implements</span> <span class="title">AbsListView</span>.<span class="title">OnScrollListener</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> Scroller mScroller;<span class="comment">//滚动控制</span></div><div class="line"></div><div class="line">    <span class="keyword">protected</span> View mHeaderView;</div><div class="line">    <span class="keyword">protected</span> View mFooterView;</div><div class="line">    <span class="keyword">protected</span> T mContentView;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> mYOffset;<span class="comment">//本次触摸 Y 轴坐标的偏移量</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> mInitScrollY = <span class="number">0</span>;<span class="comment">//最初的滚动位置，第一次布局时滚动header的高度的距离</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> mLastY = <span class="number">0</span>;<span class="comment">//最后一次触摸 Y 轴坐标</span></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STATUS_IDLE = <span class="number">0</span>;<span class="comment">//空闲状态</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STATUS_PULL_TO_REFRESH = <span class="number">1</span>;<span class="comment">//下拉或者上拉，但是没有达到可以刷新的状态</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STATUS_RELEASE_TO_REFRESH = <span class="number">2</span>;<span class="comment">//下拉或者上拉状态</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STATUS_REFRESHING = <span class="number">3</span>;<span class="comment">//刷新中</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STATUS_LOADING = <span class="number">4</span>;<span class="comment">//加载中</span></div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> mCurrentStatus = STATUS_IDLE;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ImageView mArrowImageView;<span class="comment">//header中的箭头图标</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isArrowUp;<span class="comment">//箭头是否向上</span></div><div class="line">    <span class="keyword">private</span> TextView mTipsTextView;<span class="comment">//header 中的文本提示</span></div><div class="line">    <span class="keyword">private</span> TextView mTimeTextView;<span class="comment">//header 中的时间提示</span></div><div class="line">    <span class="keyword">private</span> ProgressBar mProgressBar;<span class="comment">//进度条</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mScreenHeight;<span class="comment">//屏幕高度</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mHeaderHeight;<span class="comment">// Header 高度</span></div><div class="line"></div><div class="line">    <span class="keyword">protected</span> OnRefreshListener mOnRefreshListener;<span class="comment">//下拉刷新监听</span></div><div class="line">    <span class="keyword">protected</span> OnLoadListener mLoadListener;<span class="comment">//加载更多回调</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RefreshLayoutBase</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RefreshLayoutBase</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RefreshLayoutBase</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs);</div><div class="line"></div><div class="line">        mScroller = <span class="keyword">new</span> Scroller(context);</div><div class="line"></div><div class="line">        mScreenHeight = context.getResources().getDisplayMetrics().heightPixels;<span class="comment">//获取屏幕高度</span></div><div class="line">        mHeaderHeight = mScreenHeight / <span class="number">4</span>;<span class="comment">//header 高度为屏幕高度四分之一</span></div><div class="line">        </div><div class="line">        initLayout(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">initLayout</span><span class="params">(Context context)</span></span>&#123;</div><div class="line">        <span class="comment">//headerView</span></div><div class="line">        setupHeaderView(context);</div><div class="line">        <span class="comment">//设置内容视图</span></div><div class="line">        setupContentView(context);</div><div class="line">        <span class="comment">//设置布局参数</span></div><div class="line">        setDefaultContentLayoutParams();</div><div class="line">        <span class="comment">//添加 contentView 布局</span></div><div class="line">        addView(mContentView);</div><div class="line">        <span class="comment">//设置底部视图</span></div><div class="line">        setupFooterView(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 设置布局参数</div><div class="line">     * 给 ContentView 宽高设置为 match_parent</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setDefaultContentLayoutParams</span><span class="params">()</span> </span>&#123;</div><div class="line">        ViewGroup.LayoutParams params =</div><div class="line">                <span class="keyword">new</span> ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);</div><div class="line">        mContentView.setLayoutParams(params);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化 footerView</div><div class="line">     * <span class="doctag">@param</span> context</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupFooterView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        mFooterView = LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_footer,</div><div class="line">                <span class="keyword">this</span>, <span class="keyword">false</span>);</div><div class="line">        addView(mFooterView);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 内容视图</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">setupContentView</span><span class="params">(Context context)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化 header</div><div class="line">     * <span class="doctag">@param</span> context</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setupHeaderView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        mHeaderView = LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_header, <span class="keyword">this</span>, <span class="keyword">false</span>);</div><div class="line">        mHeaderView.setLayoutParams(<span class="keyword">new</span> ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, mHeaderHeight));</div><div class="line">        mHeaderView.setBackgroundColor(Color.RED);</div><div class="line">        <span class="comment">//header 高度为屏幕 1/4，但是，他只有 100px 的有效显示区域</span></div><div class="line">        mHeaderView.setPadding(<span class="number">0</span>, mHeaderHeight - <span class="number">100</span>, <span class="number">0</span>, <span class="number">0</span>);<span class="comment">//左上右下</span></div><div class="line">        addView(mHeaderView);</div><div class="line"></div><div class="line">        mArrowImageView = (ImageView) mHeaderView.findViewById(R.id.pull_to_arrow_image);</div><div class="line">        mTipsTextView = (TextView) mHeaderView.findViewById(R.id.pull_to_refresh_text);</div><div class="line">        mTimeTextView = (TextView) mHeaderView.findViewById(R.id.pull_to_refresh_updated_at);</div><div class="line">        mProgressBar = (ProgressBar) mHeaderView.findViewById(R.id.pull_to_refresh_progress);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**if isTop return true</span></div><div class="line">     * 达到顶部继续下拉则拦截事件</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">isTop</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * if isBottom return true</div><div class="line">     * 达到底部触发加载更多</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">isBottom</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="comment">/***************************************************</span></div><div class="line">省略部分代码，详情见github</div><div class="line">****************************************************/</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>首先是一大堆的变量，都加了注释也没什么说的，后面用到再说吧。这里主要是 initLayout() 初始化了整个下拉刷新的布局，从上到下 headerView、contentView、footerView。其中 header 和 footer 都是从布局中加载的，固定好了的。但是 contentView 是抽象的，可变的，我们可以设置他是 ListView，RecyclerView，GridView 等，到时候继承即可。</p>
+<p>另外还有两个函数 <strong>isTop() 和 isBottom()</strong>，因为我们在下拉刷新和上拉加载更多的时候，不同的内容视图判断到达底部顶部的代码是不一样的，所以把它也抽象了。</p>
+<hr>
+<h2 id="测量宽高"><a href="#测量宽高" class="headerlink" title="测量宽高"></a>测量宽高</h2><h4 id="MeasureSpec-的含义，组成"><a href="#MeasureSpec-的含义，组成" class="headerlink" title="MeasureSpec 的含义，组成"></a>MeasureSpec 的含义，组成</h4><p>接下来要做的就是测量。<strong>View</strong>的测量师<strong>自定义View</strong>中最重要的一步。在贴代码之前，有几个基本概念要搞清楚。看图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2214054-becefa825b66efbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MeasureSpec.png"></p>
+<p><strong>UNSPECIFIED</strong> 其实是开发人员按照自己的意愿调整大小，没有任何限制。但是这种情况很少见。</p>
+<p><strong>EXACTLY</strong> 往往对应 <strong>match_parent</strong>, <strong>AT_MOST</strong> 往往对应 <strong>warp_content</strong></p>
+<h4 id="getMeasureHeight-和-getHeight-区别"><a href="#getMeasureHeight-和-getHeight-区别" class="headerlink" title="getMeasureHeight() 和 getHeight() 区别"></a>getMeasureHeight() 和 getHeight() 区别</h4><p>简单地说 <strong>getMeasureHeight</strong> 可以测量到屏幕以外的布局， <strong>getHeight</strong> 测量到可视布局。</p>
+<p>举个例子，一个上拉加载更多的组件，contentView 是100dp，footerView 是 50dp，但是 footerView（加载更多视图） 不可见。用getMeasureHeight 测量的高度就是 150dp。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 测量 viewGroup 宽高。宽度为用户定义。高度是 header, contentView, footer 三者之和</div><div class="line"> * <span class="doctag">@param</span> widthMeasureSpec</div><div class="line"> * <span class="doctag">@param</span> heightMeasureSpec</div><div class="line"> */</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> width = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> childCount = getChildCount();<span class="comment">//子视图个数</span></div><div class="line">    <span class="keyword">int</span> finalHeight = <span class="number">0</span>;<span class="comment">//最终的高度</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++)&#123;</div><div class="line">        View child = getChildAt(i);</div><div class="line">        measureChild(child, widthMeasureSpec, heightMeasureSpec);<span class="comment">//测量每个子视图</span></div><div class="line">        finalHeight += child.getMeasuredHeight();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//设置下拉刷新组件的尺寸(也就是这个 ViewGroup )</span></div><div class="line">    setMeasuredDimension(width, finalHeight);</div><div class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 将 header、content、footer 从上到下布局</div><div class="line"> * 布局完成后通过 Scroller 滚动到 header 的底部</div><div class="line"> * 滑动距离为 header 高度 + 本视图 paddingtop，达到隐藏 header</div><div class="line"> */</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> childCount = getChildCount();</div><div class="line">    <span class="keyword">int</span> top = getPaddingTop();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;childCount; i++) &#123;</div><div class="line">        View child = getChildAt(i);</div><div class="line">        child.layout(<span class="number">0</span>, top, child.getMeasuredWidth(), child.getMeasuredHeight() + top);</div><div class="line">        top += child.getMeasuredHeight();</div><div class="line">    &#125;</div><div class="line">    mInitScrollY = mHeaderView.getMeasuredHeight() + getPaddingTop();</div><div class="line">    scrollTo(<span class="number">0</span>, mInitScrollY);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在onMeasure中测量了这个组件的自身大小和子视图的大小，并在onLayout中从上到下依次布局。</p>
+<p>在 OnLayout 的最后通过 Scroller 将该 ViewGroup 滑动了 HeaderView 的高度使其不可见。</p>
+<hr>
+<h2 id="下拉刷新"><a href="#下拉刷新" class="headerlink" title="下拉刷新"></a>下拉刷新</h2><p>当用户向下按的时候，判断 ContentView 视图滑动到了顶部。此时又通过 Scroller 将该组件向下滚动，使得 HeaderView 可见。这些功能都需要让我们处理触摸事件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * 拦截触摸事件</div><div class="line">  * 在 ContentView 滑动到顶部，并且下拉的时候拦截</div><div class="line">  */</div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">     <span class="comment">//获取触摸事件类型</span></div><div class="line">     <span class="keyword">final</span> <span class="keyword">int</span> action = MotionEventCompat.getActionMasked(ev);</div><div class="line">     <span class="comment">//取消事件或者抬起事件直接返回false</span></div><div class="line">     <span class="keyword">if</span>(action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP)&#123;</div><div class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="keyword">switch</span>(action) &#123;</div><div class="line">         <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">             mLastY = (<span class="keyword">int</span>) ev.getRawY();</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">         <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">             mYOffset = (<span class="keyword">int</span>) (ev.getRawY() - mLastY);</div><div class="line">             <span class="comment">//如果拉到了顶部，并且是下拉，拦截事件，转到 onTouchEvent 处理下拉刷新</span></div><div class="line">             <span class="keyword">if</span>(isTop() &amp;&amp; mYOffset &gt; <span class="number">0</span>)&#123;</div><div class="line">                 <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">             &#125;</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">         <span class="keyword">default</span>:</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">false</span>;<span class="comment">//false 默认不拦截</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><strong>onInterceptTouchEvent</strong> 是ViewGroup 中对触摸事件进行拦截的函数，返回 <code>true</code>时表示拦截。</p>
+<p>例如：如果 mYOffset &gt; 0，那么代表用户是从上往下滑动。如果此时 ContentView 已经滑动到了顶部，那么第一个可见元素就是第一项，返回 <code>true</code> 就是将后续的时间进行拦截。此时，后续的 ACTION_MOVE 就会转到 onTouchEvent 函数进行处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 在这里处理下拉刷新或者上拉加载更多</div><div class="line"> * <span class="doctag">@param</span> event</div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(event.getAction())&#123;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">            <span class="keyword">int</span> currentY = (<span class="keyword">int</span>) event.getRawY();</div><div class="line">            mYOffset = currentY - mLastY;</div><div class="line">            <span class="keyword">if</span>(mCurrentStatus != STATUS_LOADING)&#123;</div><div class="line">                changeScrollY(mYOffset);</div><div class="line">            &#125;</div><div class="line">            rotateHeaderArrow();</div><div class="line">            changeTips();</div><div class="line">            mLastY = currentY;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">            <span class="comment">//下拉刷新具体操作</span></div><div class="line">            doRefresh();</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//返回 true，消费该事件</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doRefresh</span><span class="params">()</span> </span>&#123;</div><div class="line">  changeHeaderViewStaus();</div><div class="line">  <span class="keyword">if</span>(mCurrentStatus == STATUS_REFRESHING &amp;&amp; mOnRefreshListener != <span class="keyword">null</span>)&#123;</div><div class="line">    mOnRefreshListener.onRefresh();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 onTouchEvent 函数中，判断他的事件类型。如果还是 MOVE，就计算 y 坐标的差值，在此处调用 changeScrollY 函数，在 y 轴上滚动该控件，另外还有改变箭头方向，文字提示等。如果是 ACTION_UP 手指抬起，说明松手了，就执行下拉刷新操作。当然执行的时候要判断 y坐标下拉的偏移值够不够。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 刷新结束时候调用，视图还原为基本状态</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refreshComplete</span><span class="params">()</span></span>&#123;</div><div class="line">    mScroller.startScroll(getScrollX(),getScrollY(),<span class="number">0</span>,mInitScrollY - getScrollY());</div><div class="line">    mCurrentStatus = STATUS_IDLE;</div><div class="line">    invalidate();</div><div class="line">    updateHeaderTimeStamp();</div><div class="line"></div><div class="line">    <span class="comment">//100毫秒之后处理arrow和progress，免得太突兀</span></div><div class="line">    <span class="keyword">this</span>.postDelayed(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            mArrowImageView.setVisibility(View.VISIBLE);</div><div class="line">            mProgressBar.setVisibility(View.GONE);</div><div class="line">        &#125;</div><div class="line">    &#125;,<span class="number">100</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-自定义控件/" rel="tag"># Android 自定义控件</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Android 项目相关/android项目结构.html" rel="next" title="android项目结构">
+                <i class="fa fa-chevron-left"></i> android项目结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android 基础学习/Android 中的消息机制.html" rel="prev" title="Android 中的消息机制">
+                Android 中的消息机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headlogo/head.jpg"
+               alt="易向阳" />
+          <p class="site-author-name" itemprop="name">易向阳</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化视图"><span class="nav-number">2.</span> <span class="nav-text">初始化视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测量宽高"><span class="nav-number">3.</span> <span class="nav-text">测量宽高</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MeasureSpec-的含义，组成"><span class="nav-number">3.0.1.</span> <span class="nav-text">MeasureSpec 的含义，组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getMeasureHeight-和-getHeight-区别"><span class="nav-number">3.0.2.</span> <span class="nav-text">getMeasureHeight() 和 getHeight() 区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下拉刷新"><span class="nav-number">4.</span> <span class="nav-text">下拉刷新</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">易向阳</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

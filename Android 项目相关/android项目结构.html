@@ -1,0 +1,1190 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+<meta name="baidu-site-verification" content="9BhFMqhXTE" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="项目,规范," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="规范1.AS 规范 尽量使用最新版的IDE进行开发； 编码格式统一为UTF-8； 编辑完.java、 .xml等文件后一定要格式化（基本格式方面使用 AS 默认模板即可）； 删除多余的import，减少警告出现，可利用AS的Optimize Imports(Settings → Keymap → Optimize Imports)快捷键；  2.命名规范包名全部小写，连续的单词只是简单地连接起来，">
+<meta name="keywords" content="项目,规范">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android项目结构">
+<meta property="og:url" content="http://yoursite.com/Android 项目相关/android项目结构.html">
+<meta property="og:site_name" content="ShawnYang">
+<meta property="og:description" content="规范1.AS 规范 尽量使用最新版的IDE进行开发； 编码格式统一为UTF-8； 编辑完.java、 .xml等文件后一定要格式化（基本格式方面使用 AS 默认模板即可）； 删除多余的import，减少警告出现，可利用AS的Optimize Imports(Settings → Keymap → Optimize Imports)快捷键；  2.命名规范包名全部小写，连续的单词只是简单地连接起来，">
+<meta property="og:image" content="http://i1.piimg.com/1949/25db5d031ce45b8a.png">
+<meta property="og:image" content="http://i1.piimg.com/1949/2bb5645ac230d666.jpg">
+<meta property="og:updated_time" content="2017-05-31T12:32:52.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android项目结构">
+<meta name="twitter:description" content="规范1.AS 规范 尽量使用最新版的IDE进行开发； 编码格式统一为UTF-8； 编辑完.java、 .xml等文件后一定要格式化（基本格式方面使用 AS 默认模板即可）； 删除多余的import，减少警告出现，可利用AS的Optimize Imports(Settings → Keymap → Optimize Imports)快捷键；  2.命名规范包名全部小写，连续的单词只是简单地连接起来，">
+<meta name="twitter:image" content="http://i1.piimg.com/1949/25db5d031ce45b8a.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Android 项目相关/android项目结构.html"/>
+
+
+
+
+
+  <title>android项目结构 | ShawnYang</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ShawnYang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Android 项目相关/android项目结构.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="易向阳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headlogo/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShawnYang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">android项目结构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-03T11:30:28+08:00">
+                2017-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-项目基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 项目基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+
+          
+            
+          
+
+          
+          
+             <span id="/Android 项目相关/android项目结构.html" class="leancloud_visitors" data-flag-title="android项目结构">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,350
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h2><h3 id="1-AS-规范"><a href="#1-AS-规范" class="headerlink" title="1.AS 规范"></a>1.AS 规范</h3><ol>
+<li>尽量使用最新版的IDE进行开发；</li>
+<li>编码格式统一为UTF-8；</li>
+<li>编辑完.java、 .xml等文件后一定要格式化（基本格式方面使用 AS 默认模板即可）；</li>
+<li>删除多余的import，减少警告出现，可利用AS的Optimize Imports(Settings → Keymap → Optimize Imports)快捷键；</li>
+</ol>
+<h3 id="2-命名规范"><a href="#2-命名规范" class="headerlink" title="2.命名规范"></a>2.命名规范</h3><p>包名全部小写，连续的单词只是简单地连接起来，不使用下划线，采用反域名命名规则，全部使用小写字母。</p>
+<p>一级包名是顶级域名，通常为com,edu,gov,net,org等，二级包名为公司名，三级包名根据应用进行命名，后面就是对包名的划分了，关于包名的划分，推荐使用按功能分。比如像这样：</p>
+<p><img src="http://i1.piimg.com/1949/25db5d031ce45b8a.png" alt=""></p>
+<p>或者参考谷歌 I/O 2015 的代码结构：</p>
+<p><img src="http://i1.piimg.com/1949/2bb5645ac230d666.jpg" alt=""></p>
+<h3 id="类名"><a href="#类名" class="headerlink" title="类名"></a>类名</h3><p>名词，采用大驼峰命名法，尽量避免缩写，除非该缩写是众所周知的， 比如HTML, URL，如果类名称中包含单词缩写，则单词缩写的每个字母均应大写。</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>描述</th>
+<th>例如</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activity 类</td>
+<td>Activity为后缀标识</td>
+<td>欢迎页面类WelcomeActivity</td>
+</tr>
+<tr>
+<td>Adapter类</td>
+<td>Adapter 为后缀标识</td>
+<td>新闻详情适配器 NewDetailAdapter</td>
+</tr>
+<tr>
+<td>解析类</td>
+<td>Parser为后缀标识</td>
+<td>首页解析类HomePosterParser</td>
+</tr>
+<tr>
+<td>工具方法类</td>
+<td>Utils或Manager为后缀标识（与系统或第三方的Utils区分）或功能+Utils</td>
+<td>线程池管理类：ThreadPoolManager日志工具类：LogUtils（Logger也可）打印工具类：PrinterUtils</td>
+</tr>
+<tr>
+<td>数据库类</td>
+<td>以DBHelper后缀标识</td>
+<td>新闻数据库：NewDBHelper</td>
+</tr>
+<tr>
+<td>Service类</td>
+<td>以Service为后缀标识</td>
+<td>时间服务TimeService</td>
+</tr>
+<tr>
+<td>BroadcastReceiver类</td>
+<td>以Receiver为后缀标识</td>
+<td>推送接收JPushReceiver</td>
+</tr>
+<tr>
+<td>ContentProvider类</td>
+<td>以Provider为后缀标识</td>
+<td>ShareProvider</td>
+</tr>
+<tr>
+<td>自定义的共享基础类</td>
+<td>以Base开头</td>
+<td>BaseActivity,BaseFragment</td>
+</tr>
+</tbody>
+</table>
+<p>接口（interface）：命名规则与类一样采用大驼峰命名法，多以able或ible结尾，如：</p>
+<p>interface Runnable、interface Accessible。</p>
+<blockquote>
+<p>注意：如果项目采用MVP，所有Model、View、Presenter的接口都以I为前缀，不加后缀，其他的接口采用上述命名规则。</p>
+</blockquote>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>initXX()</td>
+<td>初始化相关方法,使用init为前缀标识，如初始化布局initView()</td>
+</tr>
+<tr>
+<td>isXX() checkXX()</td>
+<td>方法返回值为boolean型的请使用is或check为前缀标识</td>
+</tr>
+<tr>
+<td>getXX()</td>
+<td>返回某个值的方法，使用get为前缀标识</td>
+</tr>
+<tr>
+<td>setXX()</td>
+<td>设置某个属性值</td>
+</tr>
+<tr>
+<td>handleXX()/processXX()</td>
+<td>对数据进行处理的方法</td>
+</tr>
+<tr>
+<td>displayXX()/showXX()</td>
+<td>弹出提示框和提示信息，使用display/show为前缀标识</td>
+</tr>
+<tr>
+<td>updateXX()</td>
+<td>更新数据</td>
+</tr>
+<tr>
+<td>saveXX()</td>
+<td>保存数据</td>
+</tr>
+<tr>
+<td>resetXX()</td>
+<td>重置数据</td>
+</tr>
+<tr>
+<td>clearXX()</td>
+<td>清除数据</td>
+</tr>
+<tr>
+<td>removeXX()</td>
+<td>移除数据或者视图等，如removeView();</td>
+</tr>
+<tr>
+<td>drawXX()</td>
+<td>绘制数据或效果相关的，使用draw前缀标识</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-资源文件"><a href="#3-资源文件" class="headerlink" title="3.资源文件"></a>3.资源文件</h3><h4 id="3-1-1-contentView命名"><a href="#3-1-1-contentView命名" class="headerlink" title="3.1.1 contentView命名"></a>3.1.1 contentView命名</h4><p>必须以全部单词小写，单词间以下划线分割，使用名词或名词词组。</p>
+<p>所有Activity或Fragment的contentView必须与其类名对应，对应规则为：将所有字母都转为小写，将类型和功能调换（也就是后缀变前缀）。</p>
+<p>例如：activity_main.xml</p>
+<h5 id="3-1-5-包含项命名"><a href="#3-1-5-包含项命名" class="headerlink" title="3.1.5 包含项命名"></a>3.1.5 包含项命名</h5><p>规则：模块_(位置)描述.xml</p>
+<p>例如：activity_main_head.xml、activity_main_bottom.xml</p>
+<p>注意：通用的包含项命名采用：项目名称缩写_描述.xml</p>
+<p>例如：xxxx_title.xml</p>
+<h4 id="3-2-资源文件（图片drawable文件夹下）"><a href="#3-2-资源文件（图片drawable文件夹下）" class="headerlink" title="3.2 资源文件（图片drawable文件夹下）"></a>3.2 资源文件（图片drawable文件夹下）</h4><p>全部小写，采用下划线命名法，加前缀区分</p>
+<p>命名模式：可加后缀 _small 表示小图， _big 表示大图，逻辑名称可由多个单词加下划线组成，采用以下规则：</p>
+<ul>
+<li>用途<em>模块名</em>逻辑名称</li>
+<li>用途<em>模块名</em>颜色</li>
+<li>用途_逻辑名称</li>
+<li>用途_颜色</li>
+</ul>
+<p>说明：用途也指控件类型（具体见附录UI控件缩写表）</p>
+<blockquote>
+<p><a href="http://www.jianshu.com/p/419f5357357d#ui%E6%8E%A7%E4%BB%B6%E7%BC%A9%E5%86%99%E8%A1%A8" target="_blank" rel="external">http://www.jianshu.com/p/419f5357357d#ui%E6%8E%A7%E4%BB%B6%E7%BC%A9%E5%86%99%E8%A1%A8</a></p>
+</blockquote>
+<p>例如：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>btn_main_home.png</td>
+<td>按键用途<em>模块名</em>逻辑名称</td>
+</tr>
+<tr>
+<td>divider_maket_white.png</td>
+<td>分割线用途<em>模块名</em>颜色</td>
+</tr>
+<tr>
+<td>ic_edit.png</td>
+<td>图标用途_逻辑名称</td>
+</tr>
+<tr>
+<td>bg_main.png</td>
+<td>背景用途_逻辑名称</td>
+</tr>
+<tr>
+<td>btn_red.png</td>
+<td>红色按键用途_颜色</td>
+</tr>
+<tr>
+<td>btn_red_big.png</td>
+<td>红色大按键用途_颜色</td>
+</tr>
+<tr>
+<td>ic_head_small.png</td>
+<td>小头像用途_逻辑名称</td>
+</tr>
+<tr>
+<td>bg_input.png</td>
+<td>输入框背景用途_逻辑名称</td>
+</tr>
+<tr>
+<td>divider_white.png</td>
+<td>白色分割线用途_颜色</td>
+</tr>
+<tr>
+<td>bg_main_head</td>
+<td>主模块头部背景图片用途<em>模块名</em>逻辑名称</td>
+</tr>
+<tr>
+<td>def_search_cell</td>
+<td>默认搜索界面单元图片用途<em>模块名</em>逻辑名称</td>
+</tr>
+<tr>
+<td>ic_more_help</td>
+<td>更多帮助图标用途_逻辑名称</td>
+</tr>
+<tr>
+<td>divider_list_line</td>
+<td>列表分割线用途_逻辑名称</td>
+</tr>
+<tr>
+<td>selector_search_ok</td>
+<td>搜索界面确认选择器用途<em>模块名</em>逻辑名称</td>
+</tr>
+<tr>
+<td>shape_music_ring</td>
+<td>音乐界面环形形状用途<em>模块名</em>逻辑名称</td>
+</tr>
+</tbody>
+</table>
+<p>如果有多种形态，如按钮选择器：btn_xx.xml(selector)</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>btn_xx</td>
+<td>按钮图片使用btn_整体效果（selector）</td>
+</tr>
+<tr>
+<td>btn_xx_normal</td>
+<td>按钮图片使用btn_正常情况效果</td>
+</tr>
+<tr>
+<td>btn_xx_pressed</td>
+<td>按钮图片使用btn_点击时候效果</td>
+</tr>
+<tr>
+<td>btn_xx_focused</td>
+<td>state_focused聚焦效果</td>
+</tr>
+<tr>
+<td>btn_xx_disabled</td>
+<td>state_enabled (false)不可用效果</td>
+</tr>
+<tr>
+<td>btn_xx_checked</td>
+<td>state_checked选中效果</td>
+</tr>
+<tr>
+<td>btn_xx_selected</td>
+<td>state_selected选中效果</td>
+</tr>
+<tr>
+<td>btn_xx_hovered</td>
+<td>state_hovered悬停效果</td>
+</tr>
+<tr>
+<td>btn_xx_checkable</td>
+<td>state_checkable可选效果</td>
+</tr>
+<tr>
+<td>btn_xx_activated</td>
+<td>state_activated激活的</td>
+</tr>
+<tr>
+<td>btn_xx_windowfocused</td>
+<td>state_window_focused</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意：使用AndroidStudio的插件SelectorChapek可以快速生成selector，前提是命名要规范。</p>
+</blockquote>
+<h4 id="3-3-动画文件（anim文件夹下）"><a href="#3-3-动画文件（anim文件夹下）" class="headerlink" title="3.3 动画文件（anim文件夹下）"></a>3.3 动画文件（anim文件夹下）</h4><p>全部小写，采用下划线命名法，加前缀区分。</p>
+<p>具体动画采用以下规则：模块名_逻辑名称。</p>
+<p>例如：refresh_progress.xml、market_cart_add.xml、market_cart_remove.xml。</p>
+<p>普通的tween动画采用如下表格中的命名方式：动画类型_方向</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fade_in</td>
+<td>淡入</td>
+</tr>
+<tr>
+<td>fade_out</td>
+<td>淡出</td>
+</tr>
+<tr>
+<td>push_down_in</td>
+<td>从下方推入</td>
+</tr>
+<tr>
+<td>push_down_out</td>
+<td>从下方推出</td>
+</tr>
+<tr>
+<td>push_left</td>
+<td>推向左方</td>
+</tr>
+<tr>
+<td>slide_in_from_top</td>
+<td>从头部滑动进入</td>
+</tr>
+<tr>
+<td>zoom_enter</td>
+<td>变形进入</td>
+</tr>
+<tr>
+<td>slide_in</td>
+<td>滑动进入</td>
+</tr>
+<tr>
+<td>shrink_to_middle</td>
+<td>中间缩小</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+            <a href="/tags/规范/" rel="tag"># 规范</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android 自定义控件/下拉刷新（Scroller 的使用）.html" rel="prev" title="下拉刷新的实现原理（Scroller 的使用）">
+                下拉刷新的实现原理（Scroller 的使用） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/headlogo/head.jpg"
+               alt="易向阳" />
+          <p class="site-author-name" itemprop="name">易向阳</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#规范"><span class="nav-number">1.</span> <span class="nav-text">规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-AS-规范"><span class="nav-number">1.1.</span> <span class="nav-text">1.AS 规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-命名规范"><span class="nav-number">1.2.</span> <span class="nav-text">2.命名规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类名"><span class="nav-number">1.3.</span> <span class="nav-text">类名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">1.4.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-资源文件"><span class="nav-number">1.5.</span> <span class="nav-text">3.资源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-contentView命名"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1.1 contentView命名</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-5-包含项命名"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">3.1.5 包含项命名</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-资源文件（图片drawable文件夹下）"><span class="nav-number">1.5.2.</span> <span class="nav-text">3.2 资源文件（图片drawable文件夹下）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-动画文件（anim文件夹下）"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.3 动画文件（anim文件夹下）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">易向阳</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4vH2izfpJ8unjYR4G7QDbisi-gzGzoHsz", "AYmGf5jA3KlAPYvr85Jk94Km");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
